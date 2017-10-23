@@ -1,0 +1,32 @@
+[{
+	"id": "seh",
+	"text": "토양환경 이력 선택",
+	"checked": true,
+	"expanded": true,
+	"children": [{
+		"id":"seh01",
+		"text": "토양정화명령부지(142)",
+		"leaf": true,
+		"checked": true
+	},{
+		"id":"seh02",
+		"text":"토양오염실태조사(42)",
+		"leaf": true,
+		"checked": true
+	},{
+		"id":"seh03",
+		"text": "특정토양오염관리대상시설",
+		"leaf": true,
+		"checked": true
+	},{
+		"id":"seh04",
+		"text": "토양정밀조사",
+		"leaf": true,
+		"checked": true
+	},{
+		"id":"seh05",
+		"text": "토양측정망",
+		"leaf": true,
+		"checked": true
+	}]
+}]
