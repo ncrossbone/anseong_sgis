@@ -1,6 +1,7 @@
 Ext.define("asSgis.view.north.North", {
 	extend: "Ext.container.Container",
 	xtype: "asSgis-north",
+	id: "northContainer",
 	header:false,
 	height:80,
 	width:"100%",
@@ -91,9 +92,41 @@ Ext.define("asSgis.view.north.North", {
 			},{
 				xtype:"combo",
 				id:"cbo03",
+				//store: 'northDongStore',
+				store: Ext.create('asSgis.store.north.NorthDongStore'),
+				displayField: 'name',
+				valueField: 'id',
 				editable:false,
 				width:100,
-				value:"가사동"
+				listeners:{
+					select:function(combo,record){
+						var admCd = record.data.id.substring(0,8);
+						var reStore = Ext.create('asSgis.store.north.NorthReStore');
+						reStore.admCd = admCd;
+						reStore.load();
+						var cbo04 = Ext.getCmp("cbo04");
+						cbo04.setStore(reStore);
+						
+						
+					}
+				}
+			},{
+				xtype:"image",
+				style:"width:6px;height:11px; margin:0 5px;",
+				src:'./resources/images/ui/arrow.png'
+			},{
+				xtype:"combo",
+				id:"cbo04",
+				displayField: 'name',
+				valueField: 'id',
+				editable:false,
+				width:100,
+				store: Ext.create('asSgis.store.north.NorthReStore'),
+				listeners:{
+					select:function(combo,record){
+						common.areaComboSelect(combo,record);
+					}
+				}
 			},{
 				xtype:"checkbox",
 				labelSeparator: '',
@@ -107,6 +140,14 @@ Ext.define("asSgis.view.north.North", {
 				xtype:"image",
 				style:"width:35px;height:30px; margin-left:3px; cursor:pointer;",
 				src:'./resources/images/ui/search_icon.gif'
+				
+			},{
+				xtype:"button",
+				listeners:{
+					click:function(){
+						common.expResultTest();
+					}
+				}
 			}]
 
 		}]

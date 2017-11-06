@@ -1,9 +1,9 @@
 Ext.define("asSgis.view.west.West", {
 	extend: "Ext.panel.Panel",
 	xtype: "asSgis-west",
+	id: "westContainer",
 	y:80,
 	width:300,
-	height:800,
 	collapsible: true,
     collapseDirection: 'left',
     headerPosition: 'right',
@@ -29,7 +29,12 @@ Ext.define("asSgis.view.west.West", {
 		useArrows: false,
 		lines:false,
 		bufferedRenderer: false,
-		collapsed: false
+		collapsed: false,
+		listeners: {
+			checkchange:function(node,b,c,d){
+				common.dynamicTreePanel1Controll(node);
+			}
+		}
 	},{
 		xtype:"treepanel",
 		title:"토양환경 이력 선택<img src='' style='width:10px; height:10px; border: 1px solid; cursor:pointer;' onclick='common.onClickStaticBtn()'>",
@@ -39,9 +44,19 @@ Ext.define("asSgis.view.west.West", {
 		useArrows: false,
 		lines:false,
 		bufferedRenderer: false,
-		collapsed: false
+		collapsed: false,
+		listeners: {
+			checkchange:function(node,b,c,d){
+				common.searchTreePanel1Controll(node);
+				
+				if(_saveMapPoint != undefined){
+					common.mapClick(_saveMapPoint);
+				}
+			}
+		}
 	}],
 	initComponent: function(){
 		this.callParent();
+		this.setHeight(Ext.getBody().getHeight()-80);
 	}
 });

@@ -1,131 +1,17 @@
 Ext.define("asSgis.view.map.Map", {
 	extend: "Ext.container.Container",
+	id: "mapContainer",
 	xtype: "asSgis-map",
+	y: 80,
+	width: "100%",
+	requires:["asSgis.view.map.CoreMap"],
 	header:false,
-	width:1500,
-	height:800,
-	style:"background:#000;",
 	items:[{
-		xtype:"container",
-		header:false,
-		x:1400,
-		y:200,
-		width:31,
-		layout:{
-			type:"vbox"
-		},
-		//mouseover 적용
-		items:[{
-			xtype:"image", //줌 +
-			id:"btn01",
-			style:"width:31px; height:31px; cursor:pointer;",
-			src:'./resources/images/ui/expand_off.gif',
-			listeners: {
-		        el: {
-		            click: function(obj) {
-		                common.groupBtnClick(obj);
-		            }
-		        }
-		    }
-		},{
-			xtype:"image",
-			id:"btn02", // 줌 -
-			style:"width:31px; height:31px; margin-top:-1px; cursor:pointer;",
-			src:'./resources/images/ui/reduce_off.gif',
-			listeners: {
-		        el: {
-		            click: function(obj) {
-		                common.groupBtnClick(obj);
-		            }
-		        }
-		    }
-		},{
-			xtype:"image",
-			id:"btn03", // 이동
-			style:"width:31px; height:31px; margin-top:-1px; cursor:pointer;",
-			src:'./resources/images/ui/move_off.gif',
-			listeners: {
-		        el: {
-		            click: function(obj) {
-		                common.groupBtnClick(obj);
-		            }
-		        }
-		    }
-		},{
-			xtype:"image",
-			id:"btn04", //전체화면
-			style:"width:31px; height:31px; margin-top:-1px; cursor:pointer;",
-			src:'./resources/images/ui/full_off.gif',
-			listeners: {
-		        el: {
-		            click: function(obj) {
-		                common.groupBtnClick(obj);
-		            }
-		        }
-		    }
-		},{
-			xtype:"image",
-			id:"btn05", //새로고침
-			style:"width:31px; height:31px; margin-top:-1px; cursor:pointer;",
-			src:'./resources/images/ui/reset_off.gif',
-			listeners: {
-		        el: {
-		            click: function(obj) {
-		                common.groupBtnClick(obj);
-		            }
-		        }
-		    }
-		},{
-			xtype:"image",
-			id:"btn06", //정보
-			style:"width:31px; height:31px; margin-top:-1px; cursor:pointer;",
-			src:'./resources/images/ui/info_off.gif',
-			listeners: {
-		        el: {
-		            click: function(obj) {
-		                common.groupBtnClick(obj);
-		            }
-		        }
-		    }
-		},{
-			xtype:"image",
-			id:"btn07", //자
-			style:"width:31px; height:31px; margin-top:-1px; cursor:pointer;",
-			src:'./resources/images/ui/ruler_off.gif',
-			listeners: {
-		        el: {
-		            click: function(obj) {
-		                common.groupBtnClick(obj);
-		            }
-		        }
-		    }
-		},{
-			xtype:"image",
-			id:"btn08", //면적?
-			style:"width:31px; height:31px; margin-top:-1px; cursor:pointer;",
-			src:'./resources/images/ui/area_off.gif',
-			listeners: {
-		        el: {
-		            click: function(obj) {
-		                common.groupBtnClick(obj);
-		            }
-		        }
-		    }
-		},{
-			xtype:"image",
-			id:"btn09", //인쇄
-			style:"width:31px; height:31px; margin-top:-1px; cursor:pointer;",
-			src:'./resources/images/ui/print_off.gif',
-			listeners: {
-		        el: {
-		            click: function(obj) {
-		                common.groupBtnClick(obj);
-		            }
-		        }
-		    }
-		}]
+		xtype:"asSgis-coremap"
 	}],
 	initComponent: function(){
 		this.callParent();
+		this.setWidth(Ext.getBody().getWidth());
+		this.setHeight(Ext.getBody().getHeight()-80);
 	}
 });

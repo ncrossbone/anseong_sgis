@@ -1,32 +1,93 @@
 [{
-	"id": "seh",
-	"text": "토양환경 이력 선택",
-	"checked": true,
+	"id": "14",
+	"text": "토양이력선택",
+	"checked": false,
 	"expanded": true,
 	"children": [{
-		"id":"seh01",
-		"text": "토양정화명령부지(142)",
+		"id":"15",
+		"text": "토양정화명령부지",
 		"leaf": true,
-		"checked": true
+		"checked": false
 	},{
-		"id":"seh02",
-		"text":"토양오염실태조사(42)",
+		"id":"16",
+		"text":"토양오염실태조사",
 		"leaf": true,
-		"checked": true
+		"checked": false
 	},{
-		"id":"seh03",
+		"id":"17",
 		"text": "특정토양오염관리대상시설",
 		"leaf": true,
-		"checked": true
+		"checked": false
 	},{
-		"id":"seh04",
+		"id":"18",
 		"text": "토양정밀조사",
 		"leaf": true,
-		"checked": true
+		"checked": false
 	},{
-		"id":"seh05",
+		"id":"19",
 		"text": "토양측정망",
 		"leaf": true,
-		"checked": true
+		"checked": false
+	}]
+},{
+	"id": "0",
+	"text": "토양오염관리대상시설",
+	"checked": false,
+	"expanded": true,
+	"children": [{
+		"id":"1",
+		"text": "2만리터미만 석유류저장시설",
+		"leaf": true,
+		"checked": false
+	},{
+		"id":"2",
+		"text":"가축매몰지",
+		"leaf": true,
+		"checked": false
+	},{
+		"id":"3",
+		"text":"골프장",
+		"leaf": true,
+		"checked": false
+	},{
+		"id":"4",
+		"text":"교통관린시설",
+		"leaf": true,
+		"checked": false
+	},{
+		"id":"5",
+		"text":"원광석 고철보관소",
+		"leaf": true,
+		"checked": false
+	},{
+		"id":"6",
+		"text":"유독물시설",
+		"leaf": true,
+		"checked": false
+	},{
+		"id":"7",
+		"text":"유톡물질시설",
+		"leaf": true,
+		"checked": false
+	},{
+		"id":"8",
+		"text":"축산폐수배출(처리)시설",
+		"leaf": true,
+		"checked": false
+	},{
+		"id":"9",
+		"text":"토야오염방지 조정명령지역",
+		"leaf": true,
+		"checked": false
+	},{
+		"id":"10",
+		"text":"특정토양",
+		"leaf": true,
+		"checked": false
+	},{
+		"id":"11",
+		"text":"폐기물처리(보관)시설",
+		"leaf": true,
+		"checked": false
 	}]
 }]
