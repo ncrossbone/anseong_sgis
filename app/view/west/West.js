@@ -3,11 +3,16 @@ Ext.define("asSgis.view.west.West", {
 	xtype: "asSgis-west",
 	id: "westContainer",
 	y:80,
-	width:300,
+	width:290,
 	collapsible: true,
     collapseDirection: 'left',
     headerPosition: 'right',
     border:false,
+    header:{
+    	width:17,
+    	style:"background : url(./resources/images/ui/left_off.png) no-repeat; top:50% !important",
+    	titlePosition:1
+    },
     layout:{
 		type:'accordion',
 		 animate: true,
@@ -22,7 +27,8 @@ Ext.define("asSgis.view.west.West", {
     },
 	items:[{
 		xtype:"treepanel",
-		title:"주제도",
+		title:"<span class='westTitle'>주제도</span>",
+		id:"thematicMap",
 		store:Ext.create("asSgis.store.west.ThematicMap"),
 		scroll: false,
 		rootVisible: false,
@@ -37,7 +43,7 @@ Ext.define("asSgis.view.west.West", {
 		}
 	},{
 		xtype:"treepanel",
-		title:"토양환경 이력 선택<img src='' style='width:10px; height:10px; border: 1px solid; cursor:pointer;' onclick='common.onClickStaticBtn()'>",
+		title:"<span class='westTitle'>토양환경 이력 선택<img src='' style='width:10px; height:10px; border: 1px solid; cursor:pointer;' onclick='common.onClickStaticBtn()'></span>",
 		store:Ext.create("asSgis.store.west.SoliEnvironHistory"),
 		scroll: false,
 		rootVisible: false,

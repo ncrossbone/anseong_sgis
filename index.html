@@ -12,9 +12,55 @@
 <script type ="text/javascript" src="./resources/js/common.js"></script>
 <script type="text/javascript" src="./resources/lib/jquery/jquery-1.11.3.min.js"></script>
 <style type="text/css">
+@font-face {
+  font-family: 'notokr-thin';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./resources/font/notokr-thin.eot);
+  src: url(./resources/font/notokr-thin.eot?#iefix) format('embedded-opentype'),
+       url(./resources/font/notokr-thin.woff2) format('woff2'),
+       url(./resources/font/notokr-thin.woff) format('woff'),
+       url(./resources/font/notokr-thin.ttf) format('truetype');
+}
 
+@font-face {
+  font-family: 'notokr-regular';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./resources/font/notokr-regular.eot);
+  src: url(./resources/font/notokr-regular.eot?#iefix) format('embedded-opentype'),
+       url(./resources/font/notokr-regular.woff2) format('woff2'),
+       url(./resources/font/notokr-regular.woff) format('woff'),
+       url(./resources/font/notokr-regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'notokr-bold';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./resources/font/notokr-bold.eot);
+  src: url(./resources/font/notokr-bold.eot?#iefix) format('embedded-opentype'),
+       url(./resources/font/notokr-bold.woff2) format('woff2'),
+       url(./resources/font/notokr-bold.woff) format('woff'),
+       url(./resources/font/notokr-bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'notokr-black';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./resources/font/notokr-black.eot);
+  src: url(./resources/font/notokr-black.eot?#iefix) format('embedded-opentype'),
+       url(./resources/font/notokr-black.woff2) format('woff2'),
+       url(./resources/font/notokr-black.woff) format('woff'),
+       url(./resources/font/notokr-black.ttf) format('truetype');
+}
+
+html, body{
+  font-family: 'notokr-regular';
+}
 /* combo border */
-#cbo01-triggerWrap, #cbo02-triggerWrap, #cbo03-triggerWrap{
+#cbo01-triggerWrap, #cbo02-triggerWrap, #cbo03-triggerWrap, #cbo04-triggerWrap{
      border:none !important;
 }
 /* combo background */
@@ -29,9 +75,40 @@
 /* combo text */
 .x-webkit .x-form-text {
     font-size: 14px !important;
+    font-family: notokr-bold;
 }
 .chkSan-displayEl{
 	color:#d0d0d0;
+}
+.x-accordion-item .x-accordion-hd {
+    background: #00284b;
+    border-bottom:1px solid #1d4465;
+    border-top:1px solid #1d4465;
+}
+.x-accordion-layout-ct {
+ 	background:#001f39;
+    padding: 0;
+}
+.westTitle{
+color: #fff; font-size: 16px; letter-spacing: -1px; font-family: notokr-bold;
+}
+
+.x-accordion-hd .x-tool-collapse-top:before, .x-accordion-hd .x-tool-collapse-bottom:before {
+    content: url(../../../../../resources/images/ui/menu_on.png);
+}
+.x-accordion-hd .x-tool-expand-top:before, .x-accordion-hd .x-tool-expand-bottom:before {
+    content: url(../../../../../resources/images/ui/menu_off.png);
+}
+.x-grid-cell-inner, .x-grid-cell-inner-treecolumn{
+  background: #001f39;
+  color:#fff;
+  font-size: 14px;
+  letter-spacing: -1px;
+  font-weight: 600;
+}
+#westContainer-body{
+	border-width:0 !important;
+	border-style:none !important;
 }
 </style>
 </head>
