@@ -4,6 +4,8 @@ Ext.define("asSgis.view.center.StatsInfo", {
 	id:"StatsInfo",
 	width:1000,
 	height:600,
+	border:false,
+	shadow:false,
 	title:"통계정보",
 	items:[{
 		xtype:"container",//전체
@@ -35,6 +37,7 @@ Ext.define("asSgis.view.center.StatsInfo", {
 					width:250,
 					items:[{
 						xtype:"label",
+						cls:"window-title-text",
 						text:"전체조사지점"
 					},{
 						xtype:"grid",
@@ -60,6 +63,7 @@ Ext.define("asSgis.view.center.StatsInfo", {
 					width:250,
 					items:[{
 						xtype:"label",
+						cls:"window-title-text",
 						text:"시설별조사지점"
 					},{
 						xtype:"grid",
@@ -86,11 +90,16 @@ Ext.define("asSgis.view.center.StatsInfo", {
 			xtype:"container",//우
 			items:[{
 				xtype:"label",
+				cls:"window-title-text",
 				text:"행정구역별 조사지점"
+			},{
+				xtype:"container",
+				height:5
 			},{
 				xtype:"grid",
 				border:false,
-				width:450,
+				width:480,
+				id:"adminArea",
 				columns:[{
 					text:"구분",
 					dataIndex:"flag"

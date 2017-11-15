@@ -3,14 +3,14 @@ Ext.define("asSgis.view.west.West", {
 	xtype: "asSgis-west",
 	id: "westContainer",
 	y:80,
-	width:290,
+	width:297,
 	collapsible: true,
     collapseDirection: 'left',
     headerPosition: 'right',
     border:false,
     header:{
     	width:17,
-    	style:"background : url(./resources/images/ui/left_off.png) no-repeat; top:50% !important",
+    	style:"background:transparent;",
     	titlePosition:1
     },
     layout:{
@@ -29,6 +29,7 @@ Ext.define("asSgis.view.west.West", {
 		xtype:"treepanel",
 		title:"<span class='westTitle'>주제도</span>",
 		id:"thematicMap",
+		border:false,
 		store:Ext.create("asSgis.store.west.ThematicMap"),
 		scroll: false,
 		rootVisible: false,
@@ -64,5 +65,18 @@ Ext.define("asSgis.view.west.West", {
 	initComponent: function(){
 		this.callParent();
 		this.setHeight(Ext.getBody().getHeight()-80);
-	}
+	},
+	listeners:{
+    	collapse:{
+    		fn: function(el){
+    			Ext.get("westContainer_header-innerCt").setStyle("background","url('./resources/images/ui/left_off.png') no-repeat");
+    		}
+    	},
+    	expand:{
+    		fn: function(el){
+
+    			Ext.get("westContainer_header-innerCt").setStyle("background","url('./resources/images/ui/left_on.png') no-repeat");
+    		}
+    	}
+    }
 });

@@ -6,8 +6,11 @@ Ext.define("asSgis.view.south.SearchResult", {
 	height:350,
 	y:600,
 	title:"검색결과",
+	border:false,
+	shadow:false,
 	items:[{
 		xtype:"tabpanel",
+		border:false,
 		tabBarPosition: "top",
 		items: [{
 			title:"토양정화명령부지(142)"

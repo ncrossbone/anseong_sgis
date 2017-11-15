@@ -1,37 +1,45 @@
 [{
 	"id": "0",
 	"text": "수문지질도",
-	"checked": false,
+	"iconCls": "layerNoneImg",
+	"checked": false, 
 	"expanded": true,
+	"leaf":false,
 	"children": [{
 		"id":"1",
 		"text": "지질단면선",
+		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"2",
 		"text":"지하수등수위선",
+		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"3",
 		"text": "유역경계",
+		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	}]
 },{
 	"id": "4",
 	"text": "지하수오염취약성도",
+	"iconCls": "layerNoneImg",
 	"checked": false,
 	"expanded": true,
 	"children": [{
 		"id":"5",
 		"text": "잠재오염원",
+		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"6",
 		"text":"오염취약성",
+		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	}]
