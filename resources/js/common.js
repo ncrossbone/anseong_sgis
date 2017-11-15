@@ -342,6 +342,7 @@ var common = (function(){
 			
 			//asSgis.getApplication().fireEvent('bufferPoint', evt.mapPoint);
 			
+			
 			if(type == undefined){
 				asSgis.getApplication().fireEvent('selectSymbol', evt.mapPoint);
 			}
@@ -454,7 +455,6 @@ var common = (function(){
 				}
 			}
 			
-			
 			var mapContainer = Ext.getCmp("mapContainer");
 			
 			var westContainer = Ext.getCmp("westContainer");
@@ -471,10 +471,10 @@ var common = (function(){
 					renderTo: mapContainer.el,
 					id: 'searchResultWindow',
 					title: '검색결과',
-					width: windowWidth - westContainer.width,
+					width: windowWidth - westContainer.width+20,
 					height: mapContainer.getHeight() - windowY,
 					y: windowY,
-					x: westContainer.width
+					x: westContainer.width-20
 				});
 				searchResultWindow.show();
 

@@ -33,6 +33,7 @@ Ext.define("asSgis.view.map.CoreMap", {
 		         "esri/config",
 		         "esri/map",
 		         "esri/graphic",
+		         "esri/InfoTemplate",
 		         "esri/geometry/normalizeUtils",
 		         "esri/tasks/GeometryService",
 		         "esri/tasks/BufferParameters",
@@ -55,15 +56,20 @@ Ext.define("asSgis.view.map.CoreMap", {
 	    		esri.config.defaults.io.alwaysUseProxy = true;
 	    		esri.config.defaults.io.postLength = 1;
 	    		Ext.defer(function() {
+	    		
+			    var infoTemplate = new esri.InfoTemplate();
+			    
    				me.map = new esri.Map('_mapDiv_', {
 			        		isDoubleClickZoom:false,
 			    	     	isPan:true,
 			    	 		logo:false,
 			    	 		//slider: true,
 			    	 		slider: false,
-			    	 		autoResize: true
+			    	 		autoResize: true,
+			    	 		infoTemplate: infoTemplate
 			    });
    				me.geometryService = new esri.tasks.GeometryService(_API.geometryServer);
+   				
    				
 				var timerId = window.setInterval(function(){
 		        	

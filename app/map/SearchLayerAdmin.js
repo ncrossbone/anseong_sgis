@@ -47,6 +47,9 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 		
 		
 		
+		
+		
+		
 		//me.simpleFillSymbol= new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, me.smpLineSymbol, new dojo.Color([0,0,255,0.1]));
 		
 		//dynamiclayer on/off fire Event
@@ -64,6 +67,8 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
     	
     	var me = this;
     	
+    	console.info(me.pointLayer.visibleLayers);
+    	
 	    var params = new esri.tasks.BufferParameters();
 	    params.geometries  = [ evt ];
 	    params.distances = [ 10 ];
@@ -72,7 +77,55 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 	    params.unit = esri.tasks.GeometryService.UNIT_METER;
 	    me.geometryService.buffer(params, function(result){
 	    	
-	    	var queryTask = new esri.tasks.QueryTask(_API.searchLayer+"/1");
+	    	var arrayInfo = [];
+	    	
+	    	for(var i = 0 ; i < me.pointLayer.visibleLayers.length; i++){
+	    		var queryTask = new esri.tasks.QueryTask(_API.searchLayer+"/" + me.pointLayer.visibleLayers[i]);
+	    		
+	    		console.info(queryTask);
+				var query = new esri.tasks.Query();
+				query.geometry = result[0];			
+				query.returnGeometry = false;
+				query.outFields = ["*"];
+				arrayInfo.push(queryTask.execute(query));
+	    	}
+	    	
+	    	var	defList = new dojo.DeferredList(arrayInfo);
+			defList.then(function(){
+				var results = [];
+				try{
+					for(var i=0; i<arguments[0].length; i++){
+						var resultValue = arguments[0][i][1].features;
+						if(resultValue[0] != undefined){
+							resultValue[0].attributes.layerNum = me.pointLayer.visibleLayers[i];
+						}
+						results = results.concat(resultValue);
+
+					}	
+				}catch(e){
+					console.log(e);
+				}
+				console.info(results);
+				
+				
+				console.info(me);
+				console.info(me.map);
+				console.info(me.map.infoWindow);
+				console.info(evt);
+				
+				me.map.infoWindow.setTitle("Coordinates");
+				me.map.infoWindow.setContent("lat/lon : " + evt.y + ", " + evt.x);
+				me.map.infoWindow.show(evt.screenPoint);
+				//me.map.infoWindow.show(evt.screenPoint,me.map.getInfoWindowAnchor(evt.screenPoint));
+				
+				/*me.map.on("click", function(evt) {
+					
+				});*/
+		          
+		    });
+	    	
+	    	
+	    	/*var queryTask = new esri.tasks.QueryTask(_API.searchLayer+"/1");
 			var query = new esri.tasks.Query();
 			query.geometry = result[0];			
 			query.returnGeometry = false;
@@ -84,7 +137,7 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 			
 			dojo.connect(queryTask, "onError", function(err) {
 				alert(err);
-			});
+			});*/
 	    });
     	
     	
@@ -145,7 +198,7 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
     			me.pointLayer.setVisibleLayers(me.pointlayers);
     		}
     	}else{
-    		me.pointLayerOnOffFor(selectInfo);
+    		me.pointLayerOnOff(selectInfo);
     	}
     	
     },
