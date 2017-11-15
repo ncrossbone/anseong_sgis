@@ -47,19 +47,28 @@ Ext.Ajax.request({
 });
 
 var _gridMapping = [{
-	"id": 15 ,"tableId":30 , "name" : "PLLT_CLEAN" , "koName" : "토양정화명령부지"
+	"id": 15 ,"tableId":30 , "docId" : 34 ,"name" : "PLLT_CLEAN" , "koName" : "토양정화명령부지"
 },{
-	"id": 16 ,"tableId":21 , "name" : "PLLT_RESERCH" , "koName" : "토양오염실태조사"
+	"id": 16 ,"tableId":21 , "docId" : 0 , "name" : "PLLT_RESERCH" , "koName" : "토양오염실태조사"
 },{
-	"id": 17 ,"tableId":20 , "name" : "PLLT_SPECIFY" , "koName" : "특정토양오염관리대상시설"
+	"id": 17 ,"tableId":20 , "docId" : 36 , "name" : "PLLT_SPECIFY" , "koName" : "특정토양오염관리대상시설"
 },{
-	"id": 18 ,"tableId":23 , "name" : "PLLT_DETAIL" , "koName" : "토양정밀조사"
+	"id": 18 ,"tableId":23 , "docId" : 0 , "name" : "PLLT_DETAIL" , "koName" : "토양정밀조사"
 },{
-	"id": 19 ,"tableId":22 , "name" : "PLLT_OBSERVE" , "koName" : "토양측정망"
+	"id": 19 ,"tableId":22 , "docId" : 0 , "name" : "PLLT_OBSERVE" , "koName" : "토양측정망"
 }];
 
 var _saveMapPoint = undefined;
 
+var _docInfo = [{
+	"id" : 36 ,"name" : "DOC_SPECIFY" , "koName" : "문헌특정"
+},{
+	"id" : 34 ,"name" : "DOC_CLEAN" , "koName" : "문헌정화"
+},{
+	"id" : 35 ,"name" : "DOC_ETC" , "koName" : "문헌기타"
+},{
+	"id" : 37 ,"name" : "DOC_CAD" , "koName" : "도면"
+}];
 
 /*var _pollutionDetailLayer = [{
 	"id": 29 , "name" : "areaBase", "koName" : "필지기본"
@@ -73,6 +82,13 @@ var _saveMapPoint = undefined;
 	"id": 25 , "name" : "coBase",  "koName" : "소유권변경"
 }];*/
 
-var _pollutionDetailLayer = [29,31,32,26,25];
 
+var _pollutionDetailLayer = [29,31,32,26,25];
 //var proxy = './proxy/proxy.jsp?';
+
+window.onresize = function() {
+	var w = Ext.query('.x-window');
+	Ext.each(w, function(item) {
+		Ext.getCmp(item.id).adjustPosition(100,100);
+		})
+	}

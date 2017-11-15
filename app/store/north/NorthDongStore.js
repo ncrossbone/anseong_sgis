@@ -1,7 +1,7 @@
 Ext.define("asSgis.store.north.NorthDongStore", {
 	extend: "Ext.data.Store",
 	remoteSort: true,
-	autoload: true,
+	//autoload: true,
 	storeId: "northDongStore",
 	fields: ['id', 'name'],
 	listeners:{
@@ -13,12 +13,16 @@ Ext.define("asSgis.store.north.NorthDongStore", {
 				query.where = "ADM_CD LIKE '4155%'";
 				query.outFields = ['ADM_CD', 'DONG_NM'];
 				queryTask.execute(query,  function(results){
-					console.info(results);
 					var data = results.features;
 					var receiveData = [];
 					Ext.each(data, function(media, index) {
 						receiveData.push({id:media.attributes.ADM_CD, name:media.attributes.DONG_NM})
 					});
+					
+					receiveData.sort(function(a, b) { // 오름차순
+					    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+					});
+					
 					store.setData(receiveData);
 				});
 				dojo.connect(queryTask, "onError", function(err) {

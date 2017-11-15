@@ -5,6 +5,7 @@ Ext.define("asSgis.view.map.CoreMap", {
 	map:null,
 	dynamicLayerAdmin:null, // 주제도 dynamiclayer
 	searchLayerAdmin:null, // 검색 searchlayer
+	geometryService:null,
 	history :[],
 	history_now :-1,
 	width: "100%",
@@ -61,29 +62,23 @@ Ext.define("asSgis.view.map.CoreMap", {
 			    	 		//slider: true,
 			    	 		slider: false,
 			    	 		autoResize: true
-			    	 		
-			        	});
+			    });
+   				me.geometryService = new esri.tasks.GeometryService(_API.geometryServer);
    				
-		   				var timerId = window.setInterval(function(){
-		   		        	
-		   					me.baseMapInit();
-		   					//me.map.setLevel(1+6);
-		   					
-		   					me.dynamicLayerAdmin = Ext.create('asSgis.map.DynamicLayerAdmin', me.map); // dynamicLayer 주제도
-		   					me.searchLayerAdmin = Ext.create('asSgis.map.SearchLayerAdmin', me.map);  // searchLayer  검색
-		   					var dongStore = Ext.create('asSgis.store.north.NorthDongStore');
-		   					dongStore.load();
-		   		            window.clearInterval(timerId);
-		
-		   				}, 1);
+				var timerId = window.setInterval(function(){
+		        	
+					me.baseMapInit();
+					//me.map.setLevel(1+6);
+					
+					me.dynamicLayerAdmin = Ext.create('asSgis.map.DynamicLayerAdmin', me.map); // dynamicLayer 주제도
+					me.searchLayerAdmin = Ext.create('asSgis.map.SearchLayerAdmin', me.map, me.geometryService);  // searchLayer  검색
+					var dongStore = Ext.create('asSgis.store.north.NorthDongStore');
+					dongStore.load();
+		            window.clearInterval(timerId);
+	
+				}, 1);
 		   		dojo.connect(me.map, "onClick", common.mapClick);    	
-		   		dojo.connect(me.map, "onExtentChange", me.onExtentChange);		
-		   		/*
-		   		var initExtent = {xmax:14196343.51528886,
-	   					xmin:14135499.64077394,
-	   					ymax:4456316.967538697,
-	   					ymin:4421767.430753843};
-					me.map.centerAndZoom(initExtent,17);*/
+		   		dojo.connect(me.map, "onExtentChange", me.onExtentChange);
 		        	
     		}, 1, this);
 	        	

@@ -3,7 +3,7 @@ Ext.define('asSgis.store.south.SearchResultGrid_PLLT_DETAIL', {
     autoLoad: true,
     pageSize: 100,
     fields:[
-    	'PNU_ID'
+    	'PNU'
     	,'CO_ID'
     	,'SUR_CATEGORY1'
     	,'SUR_CATEGORY2'
@@ -41,13 +41,17 @@ Ext.define('asSgis.store.south.SearchResultGrid_PLLT_DETAIL', {
     	,'SUR_INDOC'
     	,'SUR_TEXT'
     ],
+    sorters: [{
+    	property: 'SUR_DATE',
+    	direction: 'DESC'
+    }],
 	listeners: {
 		load: function(store) {
 			Ext.defer(function() {
 				var queryTask = new esri.tasks.QueryTask(_API.searchLayer+"/"+store.layerId);
 				var query = new esri.tasks.Query();
 				query.returnGeometry = false;
-				query.where = "PNU_NO = '" + store.pnuNo + "'";
+				query.where = "PNU = '" + store.pnuNo + "'";
 				query.outFields = ['*'];
 				query.format = "JSON";
 				queryTask.execute(query,  function(results){

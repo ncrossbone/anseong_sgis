@@ -1,37 +1,102 @@
 Ext.define('asSgis.map.DynamicLayerAdmin', {
 	map:null, 
 	id: "dynamicLayer",
-	layer:null,
-	layers:[],
+	layer1:null,
+	layers1:[],
+	
+	layer2:null,
+	layers2:[],
 	constructor: function(map) {
         var me = this;
         me.map = map;
-        me.layer = new esri.layers.ArcGISDynamicMapServiceLayer(_API.dynamicLayer);
-		me.layer.id = "DynamicLayer";
-		me.map.addLayer(me.layer);
-		me.layer.setVisibleLayers([]);
-		me.layer.visible = true;
+        me.layer1 = new esri.layers.ArcGISDynamicMapServiceLayer(_API.dynamicLayer);
+		me.layer1.id = "DynamicLayer";
+		me.map.addLayer(me.layer1);
+		me.layer1.setVisibleLayers([]);
+		me.layer1.visible = true;
+		
+		
+        me.layer2 = new esri.layers.ArcGISDynamicMapServiceLayer(_API.dynamicLayer);
+		me.layer2.id = "DynamicLayer2";
+		me.map.addLayer(me.layer2);
+		me.layer2.setVisibleLayers([]);
+		me.layer2.visible = true;
 		
 		//dynamiclayer on/off fire Event
-		asSgis.getApplication().addListener('dynamicLayerOnOff', me.dynamicLayerOnOffHandler, me);
+		asSgis.getApplication().addListener('dynamicLayer1OnOff', me.dynamicLayer1OnOffHandler, me);
+		asSgis.getApplication().addListener('dynamicLayer2OnOff', me.dynamicLayer2OnOffHandler, me);
 		
     },
     
-    dynamicLayerOnOffHandler: function(selectInfo){
+    dynamicLayer1OnOffHandler: function(selectInfo){
+    	var me = this;
+    	if(selectInfo.childNodes.length > 0 ){
+    		if(selectInfo.data.checked == false){
+    			me.layers1 = [];
+    			me.layer1.setVisibleLayers(me.layers1);
+    		}else{
+    			me.layers1 = [];
+    			for(var i = 0 ; i < selectInfo.childNodes.length; i++){
+    				me.layers1.push(selectInfo.childNodes[i].data.id);
+        		}
+    			
+    			me.layer1.setVisibleLayers(me.layers1);
+    		}
+    	}else{
+    		me.layer1OnOff(selectInfo);
+    	}
+    },
+    
+    layer1OnOff: function(selectInfo){
     	var me = this;
     	
-    	console.info(selectInfo);
-    	console.info(me.map);
-    	var idIdx = me.layers.map(function(layer){
+    	var idIdx = me.layers1.map(function(layer){
     		return layer.toString();
     	}).indexOf(selectInfo.data.id);
     	
     	if(idIdx == -1){
-    		me.layers.push(parseInt(selectInfo.data.id));
+    		me.layers1.push(parseInt(selectInfo.data.id));
     	}else{
-    		me.layers.splice(idIdx,1);
+    		me.layers1.splice(idIdx,1);
     	}
-		me.layer.setVisibleLayers(me.layers);
-		//me.layer.setVisibleLayers([18]);
-    }
+    	
+		me.layer1.setVisibleLayers(me.layers1);
+		
+    },
+    
+    dynamicLayer2OnOffHandler: function(selectInfo){
+    	var me = this;
+    	if(selectInfo.childNodes.length > 0 ){
+    		if(selectInfo.data.checked == false){
+    			me.layers2 = [];
+    			me.layer2.setVisibleLayers(me.layers2);
+    		}else{
+    			me.layers2 = [];
+    			for(var i = 0 ; i < selectInfo.childNodes.length; i++){
+    				me.layers2.push(selectInfo.childNodes[i].data.id);
+        		}
+    			
+    			me.layer2.setVisibleLayers(me.layers2);
+    		}
+    	}else{
+    		me.layer2OnOff(selectInfo);
+    	}
+    },
+    
+    layer2OnOff: function(selectInfo){
+    	var me = this;
+    	
+    	var idIdx = me.layers2.map(function(layer){
+    		return layer.toString();
+    	}).indexOf(selectInfo.data.id);
+    	
+    	if(idIdx == -1){
+    		me.layers2.push(parseInt(selectInfo.data.id));
+    	}else{
+    		me.layers2.splice(idIdx,1);
+    	}
+    	
+		me.layer2.setVisibleLayers(me.layers2);
+		
+    },
 });

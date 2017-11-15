@@ -29,19 +29,45 @@ var common = (function(){
 		},
 		
 		dynamicTreePanel1Controll: function(node){
-			asSgis.getApplication().fireEvent('dynamicLayerOnOff', node);
+			asSgis.getApplication().fireEvent('dynamicLayer1OnOff', node);
+		},
+		
+		dynamicTreePanel2Controll: function(node){
+			asSgis.getApplication().fireEvent('dynamicLayer2OnOff', node);
 		},
 		
 		searchTreePanel1Controll: function(node){
 			asSgis.getApplication().fireEvent('searchLayerOnOff', node);
 		},
 		
-		areaComboSelect: function(combo, record){
+		searchTreePanel2Controll: function(node){
+			asSgis.getApplication().fireEvent('searchPointLayerOnOff', node);
+		},
+		
+		areaComboSelect: function(pnuCd){
 			
 			var coreMap = Ext.getCmp("_mapDiv_");
 			
-			var center = esri.geometry.Polygon(record.data.geometry).getExtent().getCenter();
-			coreMap.map.centerAndZoom(center,17);
+			var queryTask = new esri.tasks.QueryTask(_API.anseongGeo);
+			var query = new esri.tasks.Query();
+			query.returnGeometry = true;
+			query.outSpatialReference = {"wkid":102100};
+			query.where = "PNU = '"+pnuCd+"'";
+			query.outFields = ["*"];
+			queryTask.execute(query,  function(result){
+				if(result.features.length == 0){
+					coreMap.searchLayerAdmin.symGrpLayer.clear();
+					return;
+				}else{
+					
+					var center = esri.geometry.Polygon(result.features[0].geometry).getExtent().getCenter();
+					coreMap.map.centerAndZoom(center,17);
+					
+					asSgis.getApplication().fireEvent('selectSymbol', center);
+					
+					
+				}
+			});
 		},
 		
 		
@@ -53,42 +79,39 @@ var common = (function(){
 			
 			var pollutionDetailLayer = [29,31,32,25,26,28];
 			
-			if(grid.getStore().getAt(1) == null){
+			if(grid.getStore().getAt(0) == null){
 				return;
 			}
 			
 			if(noCoId == true){
-				pnuCd = grid.getStore().getAt(1).data.PNU_NO;
+				pnuCd = grid.getStore().getAt(0).data.PNU;
 			}else{
-				pnuCd = grid.getStore().getAt(1).data.PNU_NO;
-				coId = grid.getStore().getAt(1).data.CO_ID;
+				pnuCd = grid.getStore().getAt(0).data.PNU;
+				coId = grid.getStore().getAt(0).data.CO_ID;
 			}
 
 			var pollutionDetailPop = Ext.getCmp("PollutionDetailPop");
 			if(pollutionDetailPop == undefined){
 				pollutionDetailPop = Ext.create("asSgis.view.center.PollutionDetailPop");
-				console.info(pollutionDetailPop);
+				pollutionDetailPop.setPosition(Ext.getBody().getViewSize().width -400 ,Ext.getBody().getViewSize().height - 900 );
 			}
 			
 			var arrayInfo = [];
 			
-			console.info("공장아이디가 있는지?"+getCoId);
 			if(getCoId == false){
 				pollutionDetailLayer.splice(pollutionDetailLayer.indexOf(25),3);
 			}
 			
-			console.info(pollutionDetailLayer);
 			
 
 			for(var i = 0 ; i < pollutionDetailLayer.length ; i++){
-				var queryTask = new esri.tasks.QueryTask("http://112.217.167.123:23002/arcgis/rest/services/SOIL_ANSUNG/MapServer/" + pollutionDetailLayer[i]);
+				var queryTask = new esri.tasks.QueryTask(_API.searchLayer +"/" + pollutionDetailLayer[i]);
 				var query = new esri.tasks.Query();
 				if(pollutionDetailLayer[i] == 29 || pollutionDetailLayer[i] == 31 || pollutionDetailLayer[i] == 32){
-					query.where = "PNU_CODE = '"+pnuCd+"'";
+					query.where = "PNU = '"+pnuCd+"'";
 				}else{
 					query.where = "CO_ID = '"+coId+"'";
 				}
-				
 
 				query.returnGeometry = false;
 				query.outFields = ["*"];
@@ -99,7 +122,6 @@ var common = (function(){
 			defList.then(function(){
 				var results = [];
 				try{
-					console.info(arguments[0]);
 					for(var i=0; i<arguments[0].length; i++){
 						var resultValue = arguments[0][i][1];
 						results = results.concat(resultValue);
@@ -108,9 +130,7 @@ var common = (function(){
 				}catch(e){
 					console.log(e);
 				}
-				
 				common.popUpDataInsert(results,getCoId);
-				
 
 				pollutionDetailPop.show();
 		    });
@@ -131,19 +151,22 @@ var common = (function(){
 			
 			var addr , jimok , area , coNm , coAd , coNumb = "-";
 			
+			
 			addr = results[0].features[0].attributes.ADRESS_ALL;
 			
-			
+			//지목의 max날짜를 검색
 			const maxJimok = results[1].features.reduce(function(prev, current) {
 			    return (prev.attributes.JIMOL_UPDATECODE > current.attributes.JIMOL_UPDATECODE) ? prev : current
 			});			
 			
 			var storeData = [];
 			for(var i = 0 ; i < results[1].features.length; i++){
-				storeData.push({"CO_UPDATE_DATE": results[1].features[i].attributes.JIMOL_UPDATE , "RESON" : "지목변경", "CO_UPDATE_INFO":results[1].features[i].attributes.JIMOL_USE});
+				if(results[1].features[i].attributes.JIMOL_UPDATE != null){	//날짜가 없는것들은 제외
+					storeData.push({"CO_UPDATE_DATE": results[1].features[i].attributes.JIMOL_UPDATE , "RESON" : "지목변경", "CO_UPDATE_INFO":results[1].features[i].attributes.JIMOL_USE});
+				}
 			}
 			for(var k = 0 ; k < results[2].features.length; k++){
-				if(results[2].features[k].attributes.OWN_UPDATE2 != null){
+				if(results[2].features[k].attributes.OWN_UPDATE2 != null){	//날짜가 없는것들은 제외
 					storeData.push({"CO_UPDATE_DATE": results[2].features[k].attributes.OWN_UPDATE2.replace(/\./g,"-") , "RESON" : "소유주변경", "CO_UPDATE_INFO":results[2].features[k].attributes.OWN_NAME});	
 				}
 			}
@@ -154,6 +177,10 @@ var common = (function(){
 					'RESON',
 					'CO_UPDATE_INFO'
 					],
+					sorters: [{
+				    	property: 'CO_UPDATE_DATE',
+				    	direction: 'DESC'
+				    }],
 				data: storeData
 			})
 			var infoRecord = Ext.getCmp("infoRecord");
@@ -162,15 +189,17 @@ var common = (function(){
 			
 			var coStoreData = [];
 			
-			console.info(getCoId);
 			if(getCoId == true){
 				
 				for(var a = 0 ; a < results[5].features.length; a++){
-					coStoreData.push({"CO_NAME": results[4].features[0].attributes.CO_COMNAME , "CO_FACCAP" : results[5].features[a].attributes.CO_FACCAP, "CO_FACMATTER":results[5].features[a].attributes.CO_FACMATTER, "CO_FACUPDATE":results[5].features[a].attributes.CO_FACUPDATE , "지번": "지번"});
+					coStoreData.push(
+							{"CO_NAME": results[4].features[0].attributes.CO_COMNAME 
+							,"CO_FACCAP" : results[5].features[a].attributes.CO_FACCAP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +"L"
+							,"CO_FACMATTER":results[5].features[a].attributes.CO_FACMATTER});
+							
 				}
 
 				coNm = results[4].features[0].attributes.CO_COMNAME;
-				console.info(coNm);
 				
 				coAd = addr;
 				
@@ -185,10 +214,13 @@ var common = (function(){
 					'CO_FACUPDATE',
 					'JIBUN'
 				],
+				sorters: [{
+			    	property: 'CO_UPDATE_DATE',
+			    	direction: 'DESC'
+			    }],
 				data:coStoreData
 			})
 			var coInfoRecord = Ext.getCmp("coInfoRecord");
-			console.info(coInfoStore);
 			coInfoRecord.setStore(coInfoStore);
 			
 			
@@ -212,8 +244,14 @@ var common = (function(){
 			 * */
 			
 			
-			jimok = maxJimok.attributes.JIMOL_USE; // JIMOL_UPDATECODE가 가장 높은 지목
-			area = maxJimok.attributes.JIMOL_SIZE;
+			if(maxJimok.attributes.JIMOL_USE != null){
+				jimok = maxJimok.attributes.JIMOL_USE; // JIMOL_UPDATECODE가 가장 높은 지목
+			}
+
+			if(maxJimok.attributes.JIMOL_SIZE != null){
+				area = maxJimok.attributes.JIMOL_SIZE.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "㎡";
+			}
+
 			
 			var infoAddr = Ext.getCmp("infoAddr");
 			infoAddr.setHtml(addr);
@@ -225,20 +263,94 @@ var common = (function(){
 			infoArea.setHtml(area);
 			
 			
+			var pdfCombo = Ext.getCmp("imgCombo");
+			var pdfComponent = Ext.getCmp("pdfComponent");
+			pdfCombo.setValue("");
+			if(getCoId == true){
+				var pdfArr = [];
+				var pdfResults = [];
+				for(var j = 0 ; j < _docInfo.length; j++){
+					var queryTask = new esri.tasks.QueryTask(_API.searchLayer + "/" + _docInfo[j].id);
+					var query = new esri.tasks.Query();
+					query.where = "CO_ID = '"+results[4].features[0].attributes.CO_ID+"'";
+					query.returnGeometry = false;
+					query.outFields = ["*"];
+					pdfArr.push(queryTask.execute(query));
+					
+					dojo.connect(queryTask, "onError", function(err) {
+						alert(err);
+					});
+				}
+				
+				var	pdfList = new dojo.DeferredList(pdfArr);
+				pdfList.then(function(){
+					var pdfResults = [];
+					try{
+						for(var i=0; i<arguments[0].length; i++){
+							var resultValue = arguments[0][i][1].features;
+							if(resultValue[0] != undefined){
+								resultValue[0].attributes.folderName = _docInfo[i].name;
+								resultValue[0].attributes.type = _docInfo[i].id;
+							}
+							pdfResults = pdfResults.concat(resultValue);
+
+						}	
+					}catch(e){
+						console.log(e);
+					}
+					
+					 
+					var pdfData = [];
+					for(var q = 0 ; q < pdfResults.length; q++){
+						pdfData.push({"fileName" : pdfResults[q].attributes.DOC_NM
+									, "fileClass": pdfResults[q].attributes.DOC_CLASS
+									, "fileType":pdfResults[q].attributes.type
+									, "folderName":pdfResults[q].attributes.folderName})
+					}
+					var pdfStore = Ext.create('Ext.data.Store',{
+						fields:[
+							'fileName',
+							'fileClass'
+						],
+						data:pdfData
+					});
+					
+					pdfCombo.setStore(pdfStore);
+					pdfComponent.setHtml("");
+			    });
+			}else{
+				//coId가 없을경우 건축물정보 remove
+				pdfCombo.setStore([]);
+				pdfComponent.setHtml("");
+				
+			}
+			
+			
+			
+            /*html : '<iframe src="./resources/DOC/DOC_CAD/4155010300-1-00270000-01.tiff" width="100%" height="100%"></iframe>',*/
+			
+			
 		},
 		
-		mapClick: function(evt){
-			
-			_saveMapPoint = evt;
+		mapClick: function(evt,type){
 			
 			var coreMap = Ext.getCmp("_mapDiv_");
 			var selectLayer = coreMap.searchLayerAdmin.layer.visibleLayers;
-			console.info(selectLayer);
 			var resultList = [];
 			
 			var pnuId = "";
+			
+			//asSgis.getApplication().fireEvent('bufferPoint', evt.mapPoint);
+			
+			if(type == undefined){
+				asSgis.getApplication().fireEvent('selectSymbol', evt.mapPoint);
+			}
+			
+			
 			if(selectLayer.length > 0){
-
+				
+				_saveMapPoint = evt;
+				
 				if(Ext.getCmp("searchResultWindow") != undefined){
 					Ext.getCmp("searchResultWindow").removeAll();
 				}
@@ -249,9 +361,13 @@ var common = (function(){
 				
 				for(var i = 0; i < selectLayer.length ; i++){
 
-						var queryTask = new esri.tasks.QueryTask("http://112.217.167.123:23002/arcgis/rest/services/SOIL_ANSUNG/MapServer/" + selectLayer[i]);
+						var queryTask = new esri.tasks.QueryTask(_API.searchLayer + "/" + selectLayer[i]);
 						var query = new esri.tasks.Query();
-						query.geometry = evt.mapPoint;
+						if(type == "search"){
+							query.where = "PNU = '"+evt+"'";					
+						}else{
+							query.geometry = evt.mapPoint;			
+						}
 						query.returnGeometry = false;
 						query.outFields = ["*"];
 						exeArr.push(queryTask.execute(query));
@@ -281,6 +397,13 @@ var common = (function(){
 					}
 					
 					var noCo = [true,null]; // 선택된 레이어 중에 CO_ID를 전부 가지고있지 않으면
+					
+					//검색결과 값이 아무것도 없을때
+					if(results.length < 1){
+						common.closeWindow();
+						return;
+					}
+					
 					//co_id를 가지고 있는 레이어 하나만 추출하기 위해
 					for(var a = 0 ; a < results.length; a++){
 						for(var b = 0 ; b < coLayer.length ; b++){
@@ -314,7 +437,6 @@ var common = (function(){
 				}
 			}
 			
-			console.info(getCoId);
 			var title = "";
 			
 			for(var i = 0 ; i < _legend.length  ; i++){
@@ -332,14 +454,8 @@ var common = (function(){
 				}
 			}
 			
-			console.info("layerId:"+layerId)
-			console.info("title:"+title);
-			console.info("gridName:"+gridName);
-			console.info("gridTable:"+gridTable);
-			
 			
 			var mapContainer = Ext.getCmp("mapContainer");
-			console.info(mapContainer);
 			
 			var westContainer = Ext.getCmp("westContainer");
 			
@@ -387,7 +503,8 @@ var common = (function(){
 				searchResultTabPanel.add(resultTabOption);
 			}
 			
-
+			searchResultTabPanel.setActiveItem("tab_" + gridName);
+			
 			
 			//그리드 붙여 넣기
 			//asSgis.view.south.SearchResultGrid
@@ -412,6 +529,18 @@ var common = (function(){
 			
 			
 
+		},
+		
+		closeWindow: function(){
+			
+			if(Ext.getCmp("searchResultWindow") != undefined){
+				Ext.getCmp("searchResultWindow").close();
+			}
+			
+			if(Ext.getCmp("PollutionDetailPop") != undefined){
+				Ext.getCmp("PollutionDetailPop").close();
+			}
+			
 		}
 		
 	};

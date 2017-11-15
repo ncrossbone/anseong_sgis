@@ -19,20 +19,4 @@
 		"leaf": true,
 		"checked": false
 	}]
-},{
-	"id": "4",
-	"text": "지하수오염취약성도",
-	"checked": false,
-	"expanded": true,
-	"children": [{
-		"id":"5",
-		"text": "잠재오염원",
-		"leaf": true,
-		"checked": false
-	},{
-		"id":"6",
-		"text":"오염취약성",
-		"leaf": true,
-		"checked": false
-	}]
 }]

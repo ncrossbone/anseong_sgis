@@ -6,15 +6,11 @@ Ext.define("asSgis.store.map.getClickPnu", {
 	listeners:{
 		load: function(store) {
 			Ext.defer(function() {
-				console.info(store);
-				console.info(store.layerId);
-				var queryTask = new esri.tasks.QueryTask("http://112.217.167.123:23002/arcgis/rest/services/SOIL_ANSUNG/MapServer/" + store.layerId);
-				console.info(queryTask);
+				var queryTask = new esri.tasks.QueryTask(_API.searchLayer +"/" + store.layerId);
 				var query = new esri.tasks.Query();
 				query.geometry = store.evt.mapPoint;
 				query.outFields = ["*"];
 				queryTask.execute(query,  function(results){
-					console.info(results);
 					if(results.features.length > 0){
 						console.info(results);
 					}

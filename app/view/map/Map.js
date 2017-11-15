@@ -13,5 +13,7 @@ Ext.define("asSgis.view.map.Map", {
 		this.callParent();
 		this.setWidth(Ext.getBody().getWidth());
 		this.setHeight(Ext.getBody().getHeight()-80);
+		this.on("resize", this.setControlSize); // 이벤트 생성
 	}
+
 });

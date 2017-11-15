@@ -36,7 +36,6 @@ Ext.define('KRF_DEV.view.south.SearchResultGrid_Reach', {
 				me.setHeight(parentCtl.getHeight() - 110);
 				
 				parentCtl.on("resize", function(){
-					////console.info(parentCtl);
 					me.setWidth(parentCtl.getWidth() - 10);
 					me.setHeight(parentCtl.getHeight() - 110);
 				});
@@ -50,9 +49,7 @@ Ext.define('KRF_DEV.view.south.SearchResultGrid_Reach', {
 				filter: {type: 'string', itemDefaults: {emptyText: 'Search for...'}},
 				listeners: {
 					click: function(tblView, el, rowCnt, colCnt, row){
-						////console.info(row);
 						var catDId = row.record.data.CAT_DID;
-						//console.info(catDId);
 						siteMovePoint("Cat", catDId);
 					}
 				},
