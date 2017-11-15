@@ -93,7 +93,7 @@ var common = (function(){
 			var pollutionDetailPop = Ext.getCmp("PollutionDetailPop");
 			if(pollutionDetailPop == undefined){
 				pollutionDetailPop = Ext.create("asSgis.view.center.PollutionDetailPop");
-				pollutionDetailPop.setPosition(Ext.getBody().getViewSize().width -400 ,Ext.getBody().getViewSize().height - 900 );
+				pollutionDetailPop.setPosition(Ext.getBody().getViewSize().width -450 ,Ext.getBody().getViewSize().height - 900 );
 			}
 			
 			var arrayInfo = [];
@@ -471,6 +471,9 @@ var common = (function(){
 					renderTo: mapContainer.el,
 					id: 'searchResultWindow',
 					title: '검색결과',
+					constrain: true,
+					border:false,
+					shawdow:false,
 					width: windowWidth - westContainer.width,
 					height: mapContainer.getHeight() - windowY,
 					y: windowY,
@@ -509,7 +512,9 @@ var common = (function(){
 			//그리드 붙여 넣기
 			//asSgis.view.south.SearchResultGrid
 			
-			var resultGrid = Ext.create("asSgis.view.south.SearchResultGrid_"+gridName);
+			var resultGrid = Ext.create("asSgis.view.south.SearchResultGrid_"+gridName,{
+				border:false
+			});
 			var resultTab = Ext.getCmp("tab_"+gridName);
 			resultTab.add(resultGrid);
 			

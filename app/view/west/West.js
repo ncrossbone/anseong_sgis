@@ -54,7 +54,7 @@ Ext.define("asSgis.view.west.West", {
 		header: {
 			hidden: true
 		},
-		store:Ext.create("asSgis.store.west.ThematicMap2"),
+		store:Ext.create("asSgis.store.west.ThematicMap1"),
 		scroll: false,
 		rootVisible: false,
 		useArrows: false,
@@ -108,7 +108,7 @@ Ext.define("asSgis.view.west.West", {
 		header: {
 			hidden: true
 		},
-		store:Ext.create("asSgis.store.west.SoliEnvironHistoryPoint"),
+		store:Ext.create("asSgis.store.west.SoliEnvironHistory"),
 		scroll: false,
 		rootVisible: false,
 		viewConfig: {
