@@ -3,29 +3,35 @@
 	"text": "토양이력선택",
 	"checked": false,
 	"expanded": true,
+	"iconCls": "layerNoneImg",
 	"children": [{
 		"id":"15",
 		"text": "토양정화명령부지",
+		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"16",
 		"text":"토양오염실태조사",
+		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"17",
 		"text": "특정토양오염관리대상시설",
+		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"18",
 		"text": "토양정밀조사",
+		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"19",
 		"text": "토양측정망",
+		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	}]

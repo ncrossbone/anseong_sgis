@@ -3,12 +3,16 @@ Ext.define("asSgis.view.west.West", {
 	xtype: "asSgis-west",
 	id: "westContainer",
 	y:80,
-	width:300,
-	autoScroll: true,
+	width:297,
 	collapsible: true,
     collapseDirection: 'left',
     headerPosition: 'right',
     border:false,
+    header:{
+    	width:17,
+    	style:"background:transparent;",
+    	titlePosition:1
+    },
     layout:{
 		type:'accordion',
 		 animate: true,
@@ -23,8 +27,10 @@ Ext.define("asSgis.view.west.West", {
     },
 	items:[{
 		xtype:"treepanel",
-		title:"주제도",
+		title:"<span class='westTitle'>주제도</span>",
 		store:Ext.create("asSgis.store.west.ThematicMap1"),
+		id:"thematicMap",
+		border:false,
 		scroll: false,
 		rootVisible: false,
 		useArrows: false,
@@ -70,7 +76,7 @@ Ext.define("asSgis.view.west.West", {
 		
 	},{
 		xtype:"treepanel",
-		title:"토양환경 이력 선택<img src='' style='width:10px; height:10px; border: 1px solid; cursor:pointer;' onclick='common.onClickStaticBtn()'>",
+		title:"<span class='westTitle'>토양환경 이력 선택<img src='' style='width:10px; height:10px; border: 1px solid; cursor:pointer;' onclick='common.onClickStaticBtn()'></span>",
 		store:Ext.create("asSgis.store.west.SoliEnvironHistory"),
 		scroll: false,
 		rootVisible: false,
@@ -129,5 +135,18 @@ Ext.define("asSgis.view.west.West", {
 	initComponent: function(){
 		this.callParent();
 		this.setHeight(Ext.getBody().getHeight()-80);
-	}
+	},
+	listeners:{
+    	collapse:{
+    		fn: function(el){
+    			Ext.get("westContainer_header-innerCt").setStyle("background","url('./resources/images/ui/left_off.png') no-repeat");
+    		}
+    	},
+    	expand:{
+    		fn: function(el){
+
+    			Ext.get("westContainer_header-innerCt").setStyle("background","url('./resources/images/ui/left_on.png') no-repeat");
+    		}
+    	}
+    }
 });

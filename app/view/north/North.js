@@ -8,6 +8,7 @@ Ext.define("asSgis.view.north.North", {
 	layout:{
 		type:"hbox"
 	},
+	style:"border-bottom: 1px solid #d4d4d4;",
 	items:[{
 		xtype:"container",
 		style:"background:#fff; padding:20px 30px;",
@@ -133,7 +134,7 @@ Ext.define("asSgis.view.north.North", {
 				labelSeparator: '',
 				id:"chkSan",
 				style:"margin:0 5px 0 10px;",
-				boxLabel:'산',
+				boxLabel:"<span style='font-family: notokr-bold;'>산</span>"
 			},{
 				xtype:"textfield",
 				id:"ziBunCode"
