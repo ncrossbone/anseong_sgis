@@ -65,7 +65,7 @@ Ext.define("asSgis.view.west.West", {
 			hidden: true
 		},
 		id:"thematicMap2",
-		store:Ext.create("asSgis.store.west.ThematicMap1"),
+		store:Ext.create("asSgis.store.west.ThematicMap2"),
 		scroll: false,
 		rootVisible: false,
 		useArrows: false,
