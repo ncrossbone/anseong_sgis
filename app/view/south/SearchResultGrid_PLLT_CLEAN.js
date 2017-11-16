@@ -18,7 +18,7 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_CLEAN', {
 				style: 'text-align:center',
 				width : 150
 			}, {
-				text : '사업장id',
+				text : '사업장ID',
 				dataIndex : 'CO_ID',
 				align: 'right',
 				style: 'text-align:center',

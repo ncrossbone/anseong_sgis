@@ -85,7 +85,7 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 	    		console.info(queryTask);
 				var query = new esri.tasks.Query();
 				query.geometry = result[0];			
-				query.returnGeometry = false;
+				query.returnGeometry = true;
 				query.outFields = ["*"];
 				arrayInfo.push(queryTask.execute(query));
 	    	}
@@ -105,39 +105,11 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 				}catch(e){
 					console.log(e);
 				}
-				console.info(results);
 				
-				
-				console.info(me);
-				console.info(me.map);
-				console.info(me.map.infoWindow);
-				console.info(evt);
-				
-				me.map.infoWindow.setTitle("Coordinates");
-				me.map.infoWindow.setContent("lat/lon : " + evt.y + ", " + evt.x);
-				me.map.infoWindow.show(evt.screenPoint);
-				//me.map.infoWindow.show(evt.screenPoint,me.map.getInfoWindowAnchor(evt.screenPoint));
-				
-				/*me.map.on("click", function(evt) {
 					
-				});*/
-		          
 		    });
 	    	
 	    	
-	    	/*var queryTask = new esri.tasks.QueryTask(_API.searchLayer+"/1");
-			var query = new esri.tasks.Query();
-			query.geometry = result[0];			
-			query.returnGeometry = false;
-			query.outFields = ["*"];
-			queryTask.execute(query,  function(results){
-				console.info(results);
-				console.info(results.features.length)
-			});
-			
-			dojo.connect(queryTask, "onError", function(err) {
-				alert(err);
-			});*/
 	    });
     	
     	

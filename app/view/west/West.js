@@ -20,16 +20,13 @@ Ext.define("asSgis.view.west.West", {
          fill: false
 	},
 	defaults: {
-        //border: true,
-        //autoHeight: true,
-        //minHeight: 304,
         titleCollapse: false
     },
 	items:[{
 		xtype:"treepanel",
 		title:"<span class='westTitle'>주제도</span>",
 		store:Ext.create("asSgis.store.west.ThematicMap1"),
-		id:"thematicMap",
+		id:"thematicMap1",
 		border:false,
 		scroll: false,
 		rootVisible: false,
@@ -47,14 +44,28 @@ Ext.define("asSgis.view.west.West", {
 	            });
 				
 				common.dynamicTreePanel1Controll(node);
-			}
+			},
+			expand: {
+				fn: function(el){
+					//Ext.getCmp("thematicMap2").setCollapsed(false);
+					Ext.getCmp("thematicMap2").setHidden(false);
+	    		}
+	        },
+	        collapse:{
+	    		fn: function(el){
+	    			Ext.getCmp("thematicMap2").setHidden(true);
+	    			/*Ext.getCmp("thematicMap2").setCollapsed(true);
+	    			console.info(Ext.getCmp("thematicMap2"));*/
+	    		}
+	    	},
 		}
 	},{
 		xtype:"treepanel",
 		header: {
 			hidden: true
 		},
-		store:Ext.create("asSgis.store.west.ThematicMap2"),
+		id:"thematicMap2",
+		store:Ext.create("asSgis.store.west.ThematicMap1"),
 		scroll: false,
 		rootVisible: false,
 		useArrows: false,
@@ -78,6 +89,7 @@ Ext.define("asSgis.view.west.West", {
 		xtype:"treepanel",
 		title:"<span class='westTitle'>토양환경 이력 선택<img src='' style='width:10px; height:10px; border: 1px solid; cursor:pointer;' onclick='common.onClickStaticBtn()'></span>",
 		store:Ext.create("asSgis.store.west.SoliEnvironHistory"),
+		id:"soliEnvironHis1",
 		scroll: false,
 		rootVisible: false,
 		viewConfig: {
@@ -101,13 +113,24 @@ Ext.define("asSgis.view.west.West", {
 				if(_saveMapPoint != undefined){
 					common.mapClick(_saveMapPoint);
 				}
-			}
+			},
+			expand: {
+				fn: function(el){
+					Ext.getCmp("soliEnvironHis2").setHidden(false);
+	    		}
+	        },
+	        collapse:{
+	    		fn: function(el){
+	    			Ext.getCmp("soliEnvironHis2").setHidden(true);
+	    		}
+	    	},
 		}
 	},{
 		xtype:"treepanel",
 		header: {
 			hidden: true
 		},
+		id: "soliEnvironHis2",
 		store:Ext.create("asSgis.store.west.SoliEnvironHistoryPoint"),
 		scroll: false,
 		rootVisible: false,
@@ -144,9 +167,9 @@ Ext.define("asSgis.view.west.West", {
     	},
     	expand:{
     		fn: function(el){
-
     			Ext.get("westContainer_header-innerCt").setStyle("background","url('./resources/images/ui/left_on.png') no-repeat");
     		}
     	}
+
     }
 });

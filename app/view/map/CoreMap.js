@@ -26,10 +26,12 @@ Ext.define("asSgis.view.map.CoreMap", {
 		require(["dojo/dom",
 		         "dojo/dom-attr",
 		         "dojo/_base/array",
+		         "dojo/dom-construct",
 		         "esri/Color",
 		         "dojo/number",
 		         "dojo/parser",
 		         "dijit/registry",
+		         "esri/dijit/Popup",
 		         "esri/config",
 		         "esri/map",
 		         "esri/graphic",
@@ -51,14 +53,17 @@ Ext.define("asSgis.view.map.CoreMap", {
 		         "dijit/layout/ContentPane",
 		         "dojox/uuid/generateRandomUuid",
 		         "esri/tasks/ProjectParameters"],  
-		         function() {
+		         function(domConstruct) {
 	        	esri.config.defaults.io.proxyUrl = "./proxy/proxy.jsp";
 	    		esri.config.defaults.io.alwaysUseProxy = true;
 	    		esri.config.defaults.io.postLength = 1;
 	    		Ext.defer(function() {
-	    		
-			    var infoTemplate = new esri.InfoTemplate();
-			    
+	    			/*var popup = new esri.dijit.Popup({
+	    		          fillSymbol: new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID,
+	    		            new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
+	    		              new esri.Color([255, 0, 0]), 2), new esri.Color([255, 255, 0, 0.25]))
+	    		        }, dojo.create("div"));*/
+	    			
    				me.map = new esri.Map('_mapDiv_', {
 			        		isDoubleClickZoom:false,
 			    	     	isPan:true,
@@ -66,8 +71,10 @@ Ext.define("asSgis.view.map.CoreMap", {
 			    	 		//slider: true,
 			    	 		slider: false,
 			    	 		autoResize: true,
-			    	 		infoTemplate: infoTemplate
+			    	 		
 			    });
+   				
+   				
    				me.geometryService = new esri.tasks.GeometryService(_API.geometryServer);
    				
    				

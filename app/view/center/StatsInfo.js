@@ -6,6 +6,7 @@ Ext.define("asSgis.view.center.StatsInfo", {
 	height:600,
 	border:false,
 	shadow:false,
+	constrain: true,
 	title:"통계정보",
 	items:[{
 		xtype:"container",//전체
