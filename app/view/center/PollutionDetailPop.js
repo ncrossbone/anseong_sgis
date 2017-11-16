@@ -206,23 +206,16 @@ Ext.define("asSgis.view.center.PollutionDetailPop", {
 							
 							var pdfComponent = Ext.getCmp("pdfComponent");
 							console.info(combo.valueCollection.items[0].data);
-							if(combo.valueCollection.items[0].data.fileType == 37){
+							console.info(combo.valueCollection.items[0].data.fileName.substring(combo.valueCollection.items[0].data.fileName.length-3,combo.valueCollection.items[0].data.fileName.length))
+							if(combo.valueCollection.items[0].data.fileName.substring(combo.valueCollection.items[0].data.fileName.length-3,combo.valueCollection.items[0].data.fileName.length) == "pdf"){
 								pdfComponent.setHtml(
-										"<img src=\"./resources/DOC/"+combo.valueCollection.items[0].data.folderName+"/"+combo.valueCollection.items[0].data.fileName+"\" width=\"100%\" height=\"100%\"></img>"
-										//"<img src=\"./resources/images/symbol/spot.png \" width=\"100%\" height=\"100%\"></img>"
-									)
-							}else{
-								if(combo.valueCollection.items[0].data.fileType == 36){
-									pdfComponent.setHtml(
-										"<iframe src=\"./resources/DOC/"+combo.valueCollection.items[0].data.folderName+"/"+combo.valueCollection.items[0].data.fileName+".pdf\" width=\"100%\" height=\"100%\"></iframe>"
-									)
-								}else{
-									pdfComponent.setHtml(
 										"<iframe src=\"./resources/DOC/"+combo.valueCollection.items[0].data.folderName+"/"+combo.valueCollection.items[0].data.fileName+"\" width=\"100%\" height=\"100%\"></iframe>"
 									)
-								}
-								
-							};
+							}else{
+								pdfComponent.setHtml(
+										"<img src=\"./resources/DOC/"+combo.valueCollection.items[0].data.folderName+"/"+combo.valueCollection.items[0].data.fileName+"\" width=\"100%\" height=\"100%\"></img>"
+									)
+							}
 						}
 						
 					}

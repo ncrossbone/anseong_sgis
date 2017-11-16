@@ -30,6 +30,9 @@ Ext.define("asSgis.view.main.Main", {
 		map.setWidth(width);
 		map.setHeight(height-80);
 		
+		/*this.setWidth(Ext.getBody().getWidth());
+		this.setHeight(Ext.getBody().getHeight()-80);*/
+		
 		var west = Ext.getCmp("westContainer");
 		west.setHeight(Ext.getBody().getHeight()-80);
 		
