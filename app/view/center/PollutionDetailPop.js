@@ -5,6 +5,7 @@ Ext.define("asSgis.view.center.PollutionDetailPop", {
 	width:430,
 	height:450,
 	title:"오염원 상세정보",
+	constrain: false,
 	border:false,
 	shawdow:false,
 	items:[{

@@ -106,6 +106,9 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 					console.log(e);
 				}
 				
+				console.info(me.map.infoWindow);
+				me.map.infoWindow.show(evt.mapPoint);
+				//me.map.infoWindow(evt.mapPoint);
 					
 		    });
 	    	

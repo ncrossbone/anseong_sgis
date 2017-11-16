@@ -94,6 +94,7 @@ var common = (function(){
 			if(pollutionDetailPop == undefined){
 				pollutionDetailPop = Ext.create("asSgis.view.center.PollutionDetailPop");
 				pollutionDetailPop.setPosition(Ext.getBody().getViewSize().width -450 ,Ext.getBody().getViewSize().height - 900 );
+				
 			}
 			
 			var arrayInfo = [];
@@ -341,7 +342,7 @@ var common = (function(){
 			var pnuId = "";
 			
 			console.info(evt);
-			//asSgis.getApplication().fireEvent('bufferPoint', evt.mapPoint);
+			asSgis.getApplication().fireEvent('bufferPoint', evt.mapPoint);
 			
 			
 			if(type == undefined){

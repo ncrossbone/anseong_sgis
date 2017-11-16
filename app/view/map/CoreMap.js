@@ -58,11 +58,11 @@ Ext.define("asSgis.view.map.CoreMap", {
 	    		esri.config.defaults.io.alwaysUseProxy = true;
 	    		esri.config.defaults.io.postLength = 1;
 	    		Ext.defer(function() {
-	    			/*var popup = new esri.dijit.Popup({
+	    			var popup = new esri.dijit.Popup({
 	    		          fillSymbol: new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID,
 	    		            new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
 	    		              new esri.Color([255, 0, 0]), 2), new esri.Color([255, 255, 0, 0.25]))
-	    		        }, dojo.create("div"));*/
+	    		        }, dojo.create("div"));
 	    			
    				me.map = new esri.Map('_mapDiv_', {
 			        		isDoubleClickZoom:false,
@@ -71,6 +71,7 @@ Ext.define("asSgis.view.map.CoreMap", {
 			    	 		//slider: true,
 			    	 		slider: false,
 			    	 		autoResize: true,
+			    	        infoWindow: popup
 			    	 		
 			    });
    				
