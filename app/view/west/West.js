@@ -65,7 +65,7 @@ Ext.define("asSgis.view.west.West", {
 			hidden: true
 		},
 		id:"thematicMap2",
-		store:Ext.create("asSgis.store.west.ThematicMap1"),
+		store:Ext.create("asSgis.store.west.ThematicMap2"),
 		scroll: false,
 		rootVisible: false,
 		useArrows: false,
@@ -87,7 +87,8 @@ Ext.define("asSgis.view.west.West", {
 		
 	},{
 		xtype:"treepanel",
-		title:"<span class='westTitle'>토양환경 이력 선택<img src='' style='width:10px; height:10px; border: 1px solid; cursor:pointer;' onclick='common.onClickStaticBtn()'></span>",
+		/*title:"<span class='westTitle'>토양환경 이력 선택<img src='' style='width:10px; height:10px; border: 1px solid; cursor:pointer;' onclick='common.onClickStaticBtn()'></span>",*/
+		title:"<span class='westTitle'>토양환경 이력 선택</span>",
 		store:Ext.create("asSgis.store.west.SoliEnvironHistory"),
 		id:"soliEnvironHis1",
 		scroll: false,

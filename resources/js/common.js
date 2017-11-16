@@ -135,7 +135,7 @@ var common = (function(){
 				common.popUpDataInsert(results,getCoId);
 
 				pollutionDetailPop.show();
-				pollutionDetailPop.setPosition(Ext.getBody().getViewSize().width -450 ,Ext.getBody().getViewSize().height - 900 );
+				pollutionDetailPop.setPosition(Ext.getBody().getViewSize().width -450 , Ext.getBody().getViewSize().height - 900 );
 		    });
 			
 		},
@@ -481,7 +481,7 @@ var common = (function(){
 					width: windowWidth - westContainer.width,
 					height: mapContainer.getHeight() - windowY,
 					y: windowY,
-					x: westContainer.width-20
+					x: westContainer.width-15
 				});
 				searchResultWindow.show();
 

@@ -4,7 +4,7 @@ Ext.define("asSgis.view.north.North", {
 	id: "northContainer",
 	header:false,
 	height:80,
-	width:"100%",
+	width:Ext.getBody().getWidth(),
 	layout:{
 		type:"hbox"
 	},
@@ -20,16 +20,18 @@ Ext.define("asSgis.view.north.North", {
 		}]
 	},{
 		xtype:"container",
-		width:1640,
+		id:"northContainerDtlMain",
 		height:80,
+		width:Ext.getBody().getWidth() - 280,
 		layout:{
 			type:"vbox"
 		},
 		items:[{
 			xtype:"container",
+			id:"northContainerDtl01",
 			height:40,
+			width:Ext.getBody().getWidth() - 280,
 			style:"background:#00284b;",
-			width:"100%",
 			layout:{
 				type:"hbox",
 				align: "middle",
@@ -60,7 +62,8 @@ Ext.define("asSgis.view.north.North", {
 		},{
 			xtype:"container",
 			style:"background: #f6f7fa;",
-			width:"100%",
+			id:"northContainerDtl02",
+			width:Ext.getBody().getWidth() - 280,
 			height:40,
 			layout:{
 				type:"hbox",

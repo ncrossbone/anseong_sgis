@@ -6,67 +6,67 @@
 	"expanded": true,
 	"children": [{
 		"id":"1",
-		"text": "2만리터미만 석유류저장시설",
+		"text": "<img src='./resources/images/layer/c1.png' />  2만리터미만 석유류저장시설",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"2",
-		"text":"가축매몰지",
+		"text":"<img src='./resources/images/layer/c2.png' /> 가축매몰지",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"3",
-		"text":"골프장",
+		"text":"<img src='./resources/images/layer/c3.png' /> 골프장",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"4",
-		"text":"교통관린시설",
+		"text":"<img src='./resources/images/layer/c4.png' /> 교통관린시설",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"5",
-		"text":"원광석 고철보관소",
+		"text":"<img src='./resources/images/layer/c5.png' /> 원광석 고철보관소",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"6",
-		"text":"유독물시설",
+		"text":"<img src='./resources/images/layer/c6.png' /> 유독물시설",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"7",
-		"text":"유톡물질시설",
+		"text":"<img src='./resources/images/layer/c7.png' /> 유톡물질시설",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"8",
-		"text":"축산폐수배출(처리)시설",
+		"text":"<img src='./resources/images/layer/c13.png' /> 축산폐수배출(처리)시설",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"9",
-		"text":"토야오염방지 조정명령지역",
+		"text":"<img src='./resources/images/layer/c8.png' /> 토야오염방지 조정명령지역",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"10",
-		"text":"특정토양",
+		"text":"<img src='./resources/images/layer/c9.png' /> 특정토양",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"11",
-		"text":"폐기물처리(보관)시설",
+		"text":"<img src='./resources/images/layer/c10.png' /> 폐기물처리(보관)시설",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
