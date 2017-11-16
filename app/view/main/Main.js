@@ -23,6 +23,33 @@ Ext.define("asSgis.view.main.Main", {
 		var MainPopup = Ext.create("asSgis.view.main.MainPopup");
 		MainPopup.hide();
 		
-		this.on("resize", this.setControlSize); // 이벤트 생성
+		Ext.EventManager.onWindowResize( this.onBrowserResize, this );
+	},
+	onBrowserResize: function(width,height) {
+		var map = Ext.getCmp("mapContainer");
+		map.setWidth(width);
+		map.setHeight(height-80);
+		
+		var west = Ext.getCmp("westContainer");
+		west.setHeight(Ext.getBody().getHeight()-80);
+		
+		var northDtl01 = Ext.getCmp("northContainerDtl01");
+		northDtl01.setWidth(width - 280);
+		var northDtl02 = Ext.getCmp("northContainerDtl02");
+		northDtl02.setWidth(width - 280);
+		var northContainerDtlMain = Ext.getCmp("northContainerDtlMain");
+		northContainerDtlMain.setWidth(width - 280);
+		var north = Ext.getCmp("northContainer");
+		north.setWidth(width);
+		
+		if(Ext.getCmp('PollutionDetailPop')!=undefined){
+			Ext.getCmp('PollutionDetailPop').setPosition(width - 450 ,height - 900 );
+		}
+		if(Ext.getCmp('searchResultWindow')!=undefined){
+			var windowY = map.getHeight() - 300;
+			Ext.getCmp('searchResultWindow').setWidth(map.getWidth()-west.getWidth());
+			Ext.getCmp('searchResultWindow').setHeight(map.getHeight()-windowY);
+			Ext.getCmp('searchResultWindow').setPosition(west.width-15 ,windowY);
+		}
 	}
 });
