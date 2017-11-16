@@ -92,8 +92,9 @@ var common = (function(){
 
 			var pollutionDetailPop = Ext.getCmp("PollutionDetailPop");
 			if(pollutionDetailPop == undefined){
-				pollutionDetailPop = Ext.create("asSgis.view.center.PollutionDetailPop");
-				pollutionDetailPop.setPosition(Ext.getBody().getViewSize().width -450 ,Ext.getBody().getViewSize().height - 900 );
+				pollutionDetailPop = Ext.create("asSgis.view.center.PollutionDetailPop",{
+					constrain:true
+				});
 				
 			}
 			
@@ -134,6 +135,7 @@ var common = (function(){
 				common.popUpDataInsert(results,getCoId);
 
 				pollutionDetailPop.show();
+				pollutionDetailPop.setPosition(Ext.getBody().getViewSize().width -450 ,Ext.getBody().getViewSize().height - 900 );
 		    });
 			
 		},
