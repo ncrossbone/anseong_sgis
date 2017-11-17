@@ -98,8 +98,10 @@ Ext.define("asSgis.view.center.StatsInfo", {
 				height:5
 			},{
 				xtype:"grid",
+				autoScroll:true,
 				border:false,
-				width:480,
+				width:460,
+				height:500,
 				id:"adminArea",
 				columns:[{
 					text:"구분",

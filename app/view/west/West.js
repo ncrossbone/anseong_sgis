@@ -26,7 +26,7 @@ Ext.define("asSgis.view.west.West", {
     },
 	items:[{
 		xtype:"treepanel",
-		title:"<span class='westTitle'>토양환경 이력 선택<img src='' style='width:10px; height:10px; border: 1px solid; cursor:pointer;' onclick='common.onClickStaticBtn()'></span>",
+		title:"<span class='westTitle'>토양환경 이력 선택</span><a style='color: #fff; background: #454c5e; padding: 0px 5px; margin-left: 30px; font-size: 14px; font-family: notokr-regular; cursor:pointer;' onclick='common.onClickStaticBtn()'>통계정보</a>",
 		/*title:"<span class='westTitle'>토양환경 이력 선택</span>",*/
 		store:Ext.create("asSgis.store.west.SoliEnvironHistory"),
 		id:"soliEnvironHis1",
