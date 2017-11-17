@@ -29,6 +29,7 @@ Ext.define("asSgis.view.main.Main", {
 		var map = Ext.getCmp("mapContainer");
 		map.setWidth(width);
 		map.setHeight(height-80);
+		var coreMap = Ext.getCmp("_mapDiv_");
 		
 		/*this.setWidth(Ext.getBody().getWidth());
 		this.setHeight(Ext.getBody().getHeight()-80);*/

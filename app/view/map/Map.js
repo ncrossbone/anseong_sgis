@@ -4,6 +4,7 @@ Ext.define("asSgis.view.map.Map", {
 	xtype: "asSgis-map",
 	y: 80,
 	width: "100%",
+	style:"overflow: hidden;",
 	requires:["asSgis.view.map.CoreMap"],
 	header:false,
 	items:[{

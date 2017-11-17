@@ -9,6 +9,7 @@ Ext.define("asSgis.view.west.West", {
     collapseDirection: 'left',
     headerPosition: 'right',
     border:false,
+    style:"overflow: hidden;",
     header:{
     	width:17,
     	style:"background:transparent;",
