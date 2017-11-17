@@ -48,25 +48,25 @@
 		"checked": false
 	},{
 		"id":"8",
-		"text":"<img src='./resources/images/layer/c13.png' /> 축산폐수배출(처리)시설",
+		"text":"<img src='./resources/images/layer/c8.png' /> 축산폐수배출(처리)시설",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"9",
-		"text":"<img src='./resources/images/layer/c8.png' /> 토야오염방지 조정명령지역",
+		"text":"<img src='./resources/images/layer/c9.png' /> 토양오염방지 조정명령지역",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"10",
-		"text":"<img src='./resources/images/layer/c9.png' /> 특정토양",
+		"text":"<img src='./resources/images/layer/c10.png' /> 특정토양",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false
 	},{
 		"id":"11",
-		"text":"<img src='./resources/images/layer/c10.png' /> 폐기물처리(보관)시설",
+		"text":"<img src='./resources/images/layer/c11.png' /> 폐기물처리(보관)시설",
 		"iconCls": "layerNoneImg",
 		"leaf": true,
 		"checked": false

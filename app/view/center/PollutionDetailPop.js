@@ -187,7 +187,7 @@ Ext.define("asSgis.view.center.PollutionDetailPop", {
 				}]
 			}]
 		},{
-			title:"건출물정보",
+			title:"건축물정보",
 			items:[{
 				type:"container",
 				laytout:{

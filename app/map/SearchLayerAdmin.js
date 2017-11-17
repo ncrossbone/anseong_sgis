@@ -66,7 +66,9 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
     bufferPointHandler: function(evt){
     	
     	var me = this;
-    	
+    	if(me.pointLayer.visibleLayers.length == 0){
+    		return;
+    	}
 	    var params = new esri.tasks.BufferParameters();
 	    params.geometries  = [ evt ];
 	    params.distances = [ 20 ];
@@ -80,7 +82,6 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 	    	for(var i = 0 ; i < me.pointLayer.visibleLayers.length; i++){
 	    		var queryTask = new esri.tasks.QueryTask(_API.searchLayer+"/" + me.pointLayer.visibleLayers[i]);
 	    		
-	    		console.info(queryTask);
 				var query = new esri.tasks.Query();
 				query.geometry = result[0];			
 				query.returnGeometry = true;
@@ -104,7 +105,6 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 					console.log(e);
 				}
 				
-				console.info(results[0]);
 				if(results[0] != undefined){
 					var point = new esri.geometry.Point(results[0].geometry.x, results[0].geometry.y, results[0].geometry.spatialReference);
 					var popCtl = Ext.getCmp("popSiteInfo");
@@ -157,7 +157,7 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 							"</head>                                                                                                                                                                            "+
 							"<body>                                                                                                                                                                             "+
 							"<div id=\"toolTip\">                                                                                                                                                               "+
-							"	<h1>"+results[0].attributes.관할기관+"</h1>"+
+							"	<h1>토양오염관리대상시설</h1>"+
 							"   <a class=\"close\" onclick=\"common.closePopSiteInfo();\" href=\"#\"></a>" +
 							"<dl>                                                                                                                                                                              "+
 							"    	<dt>분류 :</dt>                                                                                                                                                               "+

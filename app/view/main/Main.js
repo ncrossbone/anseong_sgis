@@ -51,7 +51,7 @@ Ext.define("asSgis.view.main.Main", {
 		}
 		if(Ext.getCmp('searchResultWindow')!=undefined){
 			var windowY = map.getHeight() - 300;
-			Ext.getCmp('searchResultWindow').setWidth(map.getWidth()-west.getWidth());
+			Ext.getCmp('searchResultWindow').setWidth(map.getWidth()-west.getWidth()+20);
 			Ext.getCmp('searchResultWindow').setHeight(map.getHeight()-windowY);
 			Ext.getCmp('searchResultWindow').setPosition(west.width-15 ,windowY);
 		}

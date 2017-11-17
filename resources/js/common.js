@@ -152,7 +152,12 @@ var common = (function(){
 			 *사업장주소 : coAddr
 			 *사업자등록번호 : coNum*/
 			
-			var addr , jimok , area , coNm , coAd , coNumb = "-";
+			var addr = "-";
+			var jimok = "-";
+			var area = "-";
+			var coNm = "-";
+			var coAd = "-";
+			var coNumb = "-"; 
 			
 			
 			addr = results[0].features[0].attributes.ADRESS_ALL;
@@ -286,16 +291,19 @@ var common = (function(){
 				}
 				
 				var	pdfList = new dojo.DeferredList(pdfArr);
-				pdfList.then(function(){
 					var pdfResults = [];
+					pdfList.then(function(){
 					try{
+						
 						for(var i=0; i<arguments[0].length; i++){
-							var resultValue = arguments[0][i][1].features;
-							if(resultValue[0] != undefined){
-								resultValue[0].attributes.folderName = _docInfo[i].name;
-								resultValue[0].attributes.type = _docInfo[i].id;
+							if(arguments[0][i][1].features.length > 0){
+								for(var j = 0 ; j < arguments[0][i][1].features.length; j++){
+									arguments[0][i][1].features[j].attributes.folderName = _docInfo[i].name;
+									arguments[0][i][1].features[j].attributes.type = _docInfo[i].id;
+								}
+								
 							}
-							pdfResults = pdfResults.concat(resultValue);
+							pdfResults = pdfResults.concat(arguments[0][i][1].features);
 
 						}	
 					}catch(e){
@@ -343,7 +351,7 @@ var common = (function(){
 			
 			var pnuId = "";
 			
-			console.info(evt);
+			
 			
 			asSgis.getApplication().fireEvent('bufferPoint', evt.mapPoint);
 			
@@ -479,7 +487,7 @@ var common = (function(){
 					constrain: true,
 					border:false,
 					shawdow:false,
-					width: windowWidth - westContainer.width,
+					width: windowWidth - westContainer.width+20,
 					height: mapContainer.getHeight() - windowY,
 					y: windowY,
 					x: westContainer.width-15
@@ -567,8 +575,8 @@ var common = (function(){
 				var resolution = me.tileInfo.lods[curLevel].resolution;
 				var extent = me.map.extent;
 				var centerPoint = esri.geometry.toScreenPoint(extent,Ext.getBody().getWidth(), Ext.getBody().getHeight()-67, popCtl.point);
-				xPx = centerPoint.x-popCtl.getWidth()/2+10;
-				yPx = centerPoint.y-popCtl.getHeight()+67;
+				xPx = centerPoint.x-popCtl.getWidth()/2+5;
+				yPx = centerPoint.y-popCtl.getHeight()+63;
 				// 이미지 사이즈 절반만큼 offset
 				xPx += 11;
 				yPx += 11;

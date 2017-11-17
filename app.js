@@ -61,13 +61,9 @@ var _gridMapping = [{
 var _saveMapPoint = undefined;
 
 var _docInfo = [{
-	"id" : 36 ,"name" : "DOC_SPECIFY" , "koName" : "문헌특정"
+	"id" : 34 ,"name" : "DOC_DOC" , "koName" : "문헌"
 },{
-	"id" : 34 ,"name" : "DOC_CLEAN" , "koName" : "문헌정화"
-},{
-	"id" : 35 ,"name" : "DOC_ETC" , "koName" : "문헌기타"
-},{
-	"id" : 37 ,"name" : "DOC_CAD" , "koName" : "도면"
+	"id" : 35 ,"name" : "DOC_CAD" , "koName" : "도면"
 }];
 
 /*var _pollutionDetailLayer = [{
