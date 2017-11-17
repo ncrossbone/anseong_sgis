@@ -47,22 +47,19 @@ Ext.define("asSgis.view.map.CoreMap", {
 		         "esri/symbols/Font",
 		         "esri/Color",
 		         "esri/symbols/TextSymbol",
+		         "esri/renderers/ClassBreaksRenderer",
 		         "esri/tasks/AreasAndLengthsParameters",
 		         "esri/tasks/LengthsParameters",
 		         "dijit/layout/BorderContainer",
 		         "dijit/layout/ContentPane",
 		         "dojox/uuid/generateRandomUuid",
 		         "esri/tasks/ProjectParameters"],  
-		         function(domConstruct) {
+		         function() {
 	        	esri.config.defaults.io.proxyUrl = "./proxy/proxy.jsp";
 	    		esri.config.defaults.io.alwaysUseProxy = true;
 	    		esri.config.defaults.io.postLength = 1;
 	    		Ext.defer(function() {
-	    			var popup = new esri.dijit.Popup({
-	    		          fillSymbol: new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID,
-	    		            new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
-	    		              new esri.Color([255, 0, 0]), 2), new esri.Color([255, 255, 0, 0.25]))
-	    		        }, dojo.create("div"));
+	    			
 	    			
    				me.map = new esri.Map('_mapDiv_', {
 			        		isDoubleClickZoom:false,
@@ -70,12 +67,10 @@ Ext.define("asSgis.view.map.CoreMap", {
 			    	 		logo:false,
 			    	 		//slider: true,
 			    	 		slider: false,
-			    	 		autoResize: true,
-			    	        infoWindow: popup
+			    	 		autoResize: true
 			    	 		
 			    });
-   				
-   				
+		        
    				me.geometryService = new esri.tasks.GeometryService(_API.geometryServer);
    				
    				
@@ -103,6 +98,7 @@ Ext.define("asSgis.view.map.CoreMap", {
 	onExtentChange: function(extent,a,b,obj,c){
 		
 		var me = this;
+		common.setTooltipXY();
 		//7레벨을 벗어날시 초기 zoomlevel로 돌리기
 		if(obj.level < 7){
 			common.setInitZoomLevel(extent,a,b,obj,c);
@@ -143,6 +139,9 @@ Ext.define("asSgis.view.map.CoreMap", {
 						//{level:19,resolution:0.298582141647617,scale:1128.497176}
 		          ]
 		      });
+		      
+		      me.tileInfo = this.tileInfo;
+		      
 		      me.fullExtent = this.fullExtent = new esri.geometry.Extent({
 		    	  xmin: 12728905.446270483,
 		    	  ymin: 3409091.461517964,

@@ -91,11 +91,11 @@ var common = (function(){
 			}
 
 			var pollutionDetailPop = Ext.getCmp("PollutionDetailPop");
+			
 			if(pollutionDetailPop == undefined){
 				pollutionDetailPop = Ext.create("asSgis.view.center.PollutionDetailPop",{
 					constrain:true
 				});
-				
 			}
 			
 			var arrayInfo = [];
@@ -344,6 +344,7 @@ var common = (function(){
 			var pnuId = "";
 			
 			console.info(evt);
+			
 			asSgis.getApplication().fireEvent('bufferPoint', evt.mapPoint);
 			
 			
@@ -550,6 +551,39 @@ var common = (function(){
 				Ext.getCmp("PollutionDetailPop").close();
 			}
 			
+		},
+		
+		setTooltipXY: function(){
+			var me = Ext.getCmp("_mapDiv_");
+			
+			if(me != undefined)
+				me.setX(9); // 좌측 패널 resize, collapse, expand시 맵 left 고정 2016-04-05
+			
+			var popCtl = Ext.getCmp("popSiteInfo");
+			
+			if(popCtl != undefined && popCtl != null){
+				
+				var curLevel = me.map.getLevel();
+				var resolution = me.tileInfo.lods[curLevel].resolution;
+				var extent = me.map.extent;
+				var centerPoint = esri.geometry.toScreenPoint(extent,Ext.getBody().getWidth(), Ext.getBody().getHeight()-67, popCtl.point);
+				xPx = centerPoint.x-popCtl.getWidth()/2+10;
+				yPx = centerPoint.y-popCtl.getHeight()+67;
+				// 이미지 사이즈 절반만큼 offset
+				xPx += 11;
+				yPx += 11;
+				
+				popCtl.setX(xPx);
+				popCtl.setY(yPx);
+			}
+		},
+		
+		closePopSiteInfo: function(){
+			var popCtl = Ext.getCmp("popSiteInfo");
+			
+			if(popCtl != undefined){
+				popCtl.close();
+			}
 		}
 		
 	};

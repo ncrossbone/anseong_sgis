@@ -67,8 +67,6 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
     	
     	var me = this;
     	
-    	console.info(me.pointLayer.visibleLayers);
-    	
 	    var params = new esri.tasks.BufferParameters();
 	    params.geometries  = [ evt ];
 	    params.distances = [ 10 ];
@@ -106,10 +104,79 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 					console.log(e);
 				}
 				
-				console.info(me.map.infoWindow);
-				me.map.infoWindow.show(evt.mapPoint);
-				//me.map.infoWindow(evt.mapPoint);
+				console.info(results[0]);
+				if(results[0] != undefined){
+					var point = new esri.geometry.Point(results[0].geometry.x, results[0].geometry.y, results[0].geometry.spatialReference);
+					var popCtl = Ext.getCmp("popSiteInfo");
 					
+					me.map.centerAt(point);
+					
+					// 팝업 띄워져있으면 닫기
+					if(popCtl != undefined){
+						popCtl.close();
+					}
+					
+					Ext.create("Ext.window.Window", {
+						//renderTo: Ext.getBody(),
+						header: false,
+						id: 'popSiteInfo',
+						shadow: false,
+						plain: true, // 요게 있어야 background: transparent 먹음..
+						point: point, // 지점 포인트 정보
+						width: 380,
+						height: 215,
+						cls: 'window_popSiteInfo',
+						isMove: false,
+						style: 'border-style: none !important; background: transparent none !important; height: 700px;',
+						layout: {
+							type: 'absolute'
+						},
+						html: 
+							"<!doctype html>																																									"+
+							"<html lang=\"ko\">                                                                                                                                                                 "+
+							"<head>                                                                                                                                                                             "+
+							"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />                                                                                                          "+
+							"<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge, chrome=1\" />                                                                                                              "+
+							"<title>KRF-TOOLTIP</title>                                                                                                                                                         "+
+							"<!--[if lt ie 9]>                                                                                                                                                                  "+
+							"<script src=\"./resources/js/html5shiv.js\"></script>                                                                                                                                          "+
+							"<![endif]-->                                                                                                                                                                       "+
+							"<link href=\"./resources/css/BasicSet.css\" rel=\"stylesheet\" type=\"text/css\" />                                                                                                            "+
+							"<style type=\"text/css\">                                                                                                                                                          "+
+							"#toolTip { width: 370px; height: 230px; padding: 15px 15px 15px 10px; background: url(./resources/images/popup/Tooltip.png) no-repeat; position: relative; font-size: 12px; font-family:'NanumGothic'; }       "+
+							"#toolTip> a.close { width: 25px; height: 25px; background: #FFF url(./resources/images/popup/btn_close.png) center center no-repeat; position: absolute; right: 15px; top: 15px; border: 1px solid #aaa; } "+
+							"#toolTip> h1 { font-family: 'malgunbd'; font-size: 20px; margin: 0px; padding: 0px; letter-spacing: -1px; }                                                                        "+
+							"#toolTip> dl { margin: 30px 0px 5px 0px; }                                                                                                                                         "+
+							"#toolTip> dl:after { content:\"\"; clear:both; display:block; *zoom:1;}                                                                                                            "+
+							"#toolTip> dl dt { float: left; font-weight: bold; color: #000; }                                                                                                                   "+
+							"#toolTip> dl dd { margin: 0px; color: #434343; text-indent: 5px; }                                                                                                                 "+
+							"#toolTip> ul { width: 362px; position: absolute; left: 15px; top: 143px; margin: 0px; padding: 0px; list-style: none; list-position: inside; }                                                                                                          "+
+							"#toolTip> ul> li { }                                                                                                                                                               "+
+							"#toolTip> ul> li> a { float: left; }                                                                                                                                          "+
+							"</style>                                                                                                                                                                           "+
+							"</head>                                                                                                                                                                            "+
+							"<body>                                                                                                                                                                             "+
+							"<div id=\"toolTip\">                                                                                                                                                               "+
+							"	<h1>"+results[0].attributes.관할기관+"</h1>"+
+							"   <a class=\"close\" onclick=\"common.closePopSiteInfo();\" href=\"#\"></a>" +
+							"<dl>                                                                                                                                                                              "+
+							"    	<dt>분류 :</dt>                                                                                                                                                               "+
+							"        <dd>"+results[0].attributes.대분류+"</dd> <br>                                                                                                                                            "+
+							"        <dt>주소 :</dt>                                                                                                                                                            "+
+							"        <dd>"+results[0].attributes.법정동주소+"</dd>                                                                                       "+
+							"    </dl>                                                                                                                                                                          "+
+							"</div>                                                                                                                                                                             "+
+							"</body>                                                                                                                                                                            "+
+							"</html>                                                                                                                                                                            "
+					}).show();
+					
+					me.symGrpLayer.clear();
+					common.setTooltipXY(evt);
+					
+				}else{
+					common.closePopSiteInfo();
+				}
+				
 		    });
 	    	
 	    	
@@ -199,6 +266,11 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
     	graphic = new esri.Graphic(evt, me.symbol);
     	me.symGrpLayer.clear();
     	me.symGrpLayer.add(graphic);
+    	
+    	Ext.defer(function(){
+			me.symGrpLayer.clear();
+			//me.map.removeLayer(obj);
+		}, 10000, this);
     	
     }
 });
