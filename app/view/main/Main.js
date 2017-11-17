@@ -28,8 +28,7 @@ Ext.define("asSgis.view.main.Main", {
 	onBrowserResize: function(width,height) {
 		var map = Ext.getCmp("mapContainer");
 		map.setWidth(width);
-		map.setHeight(height-80);
-		var coreMap = Ext.getCmp("_mapDiv_");
+		map.setHeight(height - 80);
 		
 		var west = Ext.getCmp("westContainer");
 		west.setHeight(Ext.getBody().getHeight()-80);
