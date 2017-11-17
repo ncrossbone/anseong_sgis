@@ -4,6 +4,7 @@ Ext.define("asSgis.view.west.West", {
 	id: "westContainer",
 	y:80,
 	width:297,
+	autoScroll: true,
 	collapsible: true,
     collapseDirection: 'left',
     headerPosition: 'right',

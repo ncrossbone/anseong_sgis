@@ -17,6 +17,11 @@ Ext.define("asSgis.view.north.North", {
 		items:[{
 			xtype:"image",
 			src:"./resources/images/ui/logo.png",
+			autoEl: {
+			      tag: 'a',
+			      href: 'http://localhost:8070/SGIS_anseong/'
+			      //add any other attributes to the 'a' tag as needed
+			  }
 		}]
 	},{
 		xtype:"container",
