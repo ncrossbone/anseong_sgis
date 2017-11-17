@@ -60,48 +60,56 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_SPECIFY', {
 			}, {
 				text : '카드뮴(mg/kg)',
 				dataIndex : 'SUR_Cd',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '구리',
 				dataIndex : 'SUR_Cu',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '비소 ',
 				dataIndex : 'SUR_As',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '수은',
 				dataIndex : 'SUR_Hg',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '납',
 				dataIndex : 'SUR_Pb',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '6가 크롬',
 				dataIndex : 'SUR_Cr',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '아연',
 				dataIndex : 'SUR_Zn',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '니켈',
 				dataIndex : 'SUR_Ni',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
@@ -126,6 +134,7 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_SPECIFY', {
 			}, {
 				text : '시안',
 				dataIndex : 'SUR_Si',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
@@ -174,24 +183,28 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_SPECIFY', {
 			}, {
 				text : 'TCE',
 				dataIndex : 'SUR_TCE',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : 'PCE',
 				dataIndex : 'SUR_PCE',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '벤조(a)피렌',
 				dataIndex : 'SUR_BENZO',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : 'pH',
 				dataIndex : 'SUR_Ph',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150

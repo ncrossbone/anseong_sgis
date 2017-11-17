@@ -74,84 +74,98 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_CLEAN', {
 			}, {
 				text : '카드뮴(mg/kg)',
 				dataIndex : 'SUR_Cd',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '구리',
 				dataIndex : 'SUR_Cu',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '비소 ',
 				dataIndex : 'SUR_As',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '수은',
 				dataIndex : 'SUR_Hg',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '납',
 				dataIndex : 'SUR_Pb',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '6가 크롬',
 				dataIndex : 'SUR_Cr',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '아연',
 				dataIndex : 'SUR_Zn',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '니켈',
 				dataIndex : 'SUR_Ni',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '불소',
 				dataIndex : 'SUR_F',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '유기인',
 				dataIndex : 'SUR_DOP',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : 'PCBs',
 				dataIndex : 'SUR_PCBs',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '시안',
 				dataIndex : 'SUR_Si',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : '페놀류',
 				dataIndex : 'SUR_Penol',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
 			}, {
 				text : 'BTEX',
 				dataIndex : 'SUR_BTEX',
+				hidden: true,
 				align: 'right',
 				style: 'text-align:center',
 				width : 150
