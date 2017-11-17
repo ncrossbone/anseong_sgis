@@ -69,7 +69,7 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
     	
 	    var params = new esri.tasks.BufferParameters();
 	    params.geometries  = [ evt ];
-	    params.distances = [ 10 ];
+	    params.distances = [ 20 ];
 	    params.outSpatialReference = new esri.SpatialReference({wkid:102100});
 	    params.bufferSpatialReference = new esri.SpatialReference({wkid:102080});
 	    params.unit = esri.tasks.GeometryService.UNIT_METER;
