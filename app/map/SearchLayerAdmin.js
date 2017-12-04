@@ -81,6 +81,7 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 	    	
 	    	for(var i = 0 ; i < me.pointLayer.visibleLayers.length; i++){
 	    		var queryTask = new esri.tasks.QueryTask(_API.searchLayer+"/" + me.pointLayer.visibleLayers[i]);
+	    		console.info(me.pointLayer.visibleLayers[i]);
 	    		
 				var query = new esri.tasks.Query();
 				query.geometry = result[0];			
@@ -106,6 +107,7 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 				}
 				
 				if(results[0] != undefined){
+					console.info(results);
 					var point = new esri.geometry.Point(results[0].geometry.x, results[0].geometry.y, results[0].geometry.spatialReference);
 					var popCtl = Ext.getCmp("popSiteInfo");
 					
@@ -165,6 +167,13 @@ Ext.define('asSgis.map.SearchLayerAdmin', {
 							"        <dt>주소 :</dt>                                                                                                                                                            "+
 							"        <dd>"+results[0].attributes.법정동주소+"</dd>                                                                                       "+
 							"    </dl>                                                                                                                                                                          "+
+							"    <ul>                                                                                                                                                                           "+
+							"    	<li style=\"float: left;\">                                                                                                                                                   "+
+							"            <a href=\"#\"><img src=\"./resources/images/popup/btn_data.gif\" onClick=\"common.testResult('"+results[0].attributes.UID+"','"+results[0].attributes.layerNum+"');\" /></a> "+
+							"        </li>                                                                                                                                                                   "+
+							"        </li>                                                                                                                                                                      "+
+							"    </ul>                                                                                                                                                                          "+
+							
 							"</div>                                                                                                                                                                             "+
 							"</body>                                                                                                                                                                            "+
 							"</html>                                                                                                                                                                            "

@@ -8,56 +8,94 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_OBSERVE', {
 		items: [{
 			xtype: 'grid',
 			id: 'serachReultGrid_PLLT_OBSERVE',
-			height: 210,
 			autoScroll:true,
+			plugins: 'gridfilters',
+			listeners: {
+				filterchange : function( store, filters, eOpts){
+					//filter change 이벤트시 카운팅
+					common.tabCounting(store);
+				}
+			},
+			height: 215,
 			columns : [ {
 				text : 'PNU',
 				dataIndex : 'PNU',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				listeners: {
+					click: function(tblView, el, rowCnt, colCnt, row){
+						console.info(row.record.data.PNU);
+						//row.record.data.PNU
+						common.areaComboSelect(row.record.data.PNU);
+					}
+				},
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '대분류',
 				dataIndex : 'SUR_CATEGORY1',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '소분류',
 				dataIndex : 'SUR_CATEGORY2',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '이력번호',
 				dataIndex : 'SUR_HISNO',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'number',
+		        }
 			}, {
 				text : '조사연도',
 				dataIndex : 'SUR_DATE',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'number',
+		        }
 			}, {
 				text : '지점번호',
 				dataIndex : 'SUR_SPOTNO',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '지점이름(고유명칭)',
 				dataIndex : 'SUR_SPOTNAME',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '지역구분(검사목적)',
 				dataIndex : 'SUR_AREASEC',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'list',
+		        }
 			}, {
 				text : '카드뮴(mg/kg)',
 				dataIndex : 'SUR_Cd',
@@ -201,19 +239,28 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_OBSERVE', {
 				dataIndex : 'SUR_INSEC',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '출처(문서ID)',
 				dataIndex : 'SUR_INDOC',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '비고',
 				dataIndex : 'SUR_TEXT',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}]
 		}]
 	}],

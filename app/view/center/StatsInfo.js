@@ -25,8 +25,8 @@ Ext.define("asSgis.view.center.StatsInfo", {
 				width:500,
 				height:300,
 				items:[{
-					xtype:"label",
-					text:"지도이미지"
+					xtype:"image",
+					src:"./resources/images/ui/samplemap.png"
 				}]
 			},{
 				xtype:"container",//그리드

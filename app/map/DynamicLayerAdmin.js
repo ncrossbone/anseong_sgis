@@ -6,6 +6,9 @@ Ext.define('asSgis.map.DynamicLayerAdmin', {
 	
 	layer2:null,
 	layers2:[],
+	
+	anSeongLyaer:null,
+	
 	constructor: function(map) {
         var me = this;
         me.map = map;
@@ -21,6 +24,24 @@ Ext.define('asSgis.map.DynamicLayerAdmin', {
 		me.map.addLayer(me.layer2);
 		me.layer2.setVisibleLayers([]);
 		me.layer2.visible = true;
+		
+		 
+		//_API.anSeongDynamicLayer
+		
+		//ADM_CD: 4155000000
+
+		
+		var defaultSymbol = new esri.symbol.SimpleFillSymbol().setStyle(esri.symbol.SimpleFillSymbol.STYLE_NULL);
+        defaultSymbol.outline.setStyle(esri.symbol.SimpleLineSymbol.STYLE_NULL);
+		
+		var renderer = new esri.renderer.UniqueValueRenderer(defaultSymbol, "ADM_CD");
+		
+		renderer.addValue("4155000000", new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([0, 0, 0, 0])));
+		
+		var featureLayer = new esri.layers.FeatureLayer(_API.anSeongDynamicLayer);
+		featureLayer.setRenderer(renderer);
+		me.map.addLayer(featureLayer);
+		
 		
 		//dynamiclayer on/off fire Event
 		asSgis.getApplication().addListener('dynamicLayer1OnOff', me.dynamicLayer1OnOffHandler, me);

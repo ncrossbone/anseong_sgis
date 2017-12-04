@@ -6,8 +6,6 @@ var common = (function(){
 	return{
 		onClickStaticBtn:function(){
 			windowOnOff("StatsInfo","asSgis.view.center.StatsInfo");
-			windowOnOff("PollutionDetailInfo","asSgis.view.center.PollutionDetailInfo");
-			//windowOnOff("SearchResult","asSgis.view.south.SearchResult");
 		},
 		
 		groupBtnClick:function(obj){
@@ -77,18 +75,13 @@ var common = (function(){
 			var pnuCd = null;
 			var coId = null;
 			
-			var pollutionDetailLayer = [29,31,32,25,26,28];
+			var pollutionDetailLayer = [29,31,32];
 			
 			if(grid.getStore().getAt(0) == null){
 				return;
 			}
 			
-			if(noCoId == true){
-				pnuCd = grid.getStore().getAt(0).data.PNU;
-			}else{
-				pnuCd = grid.getStore().getAt(0).data.PNU;
-				coId = grid.getStore().getAt(0).data.CO_ID;
-			}
+			
 
 			var pollutionDetailPop = Ext.getCmp("PollutionDetailPop");
 			
@@ -96,24 +89,33 @@ var common = (function(){
 				pollutionDetailPop = Ext.create("asSgis.view.center.PollutionDetailPop",{
 					constrain:true
 				});
+				
 			}
+			
+			
+			var popTab = Ext.getCmp("popTab"); //오염원상세정보 tab
+			popTab.setActiveTab(0); //기본정보로 세팅 (disable을 위해)
+			
+			var subInfo = Ext.getCmp("subInfo"); // 사업장정보
+			if(noCoId == true){
+				//사업장정보				
+				subInfo.setDisabled(true);
+				pnuCd = grid.getStore().getAt(0).data.PNU;
+			}else{
+				//사업장정보
+				subInfo.setDisabled(false);
+				
+				pnuCd = grid.getStore().getAt(0).data.PNU;
+				coId = grid.getStore().getAt(0).data.CO_ID;
+			}
+			
 			
 			var arrayInfo = [];
-			
-			if(getCoId == false){
-				pollutionDetailLayer.splice(pollutionDetailLayer.indexOf(25),3);
-			}
-			
-			
 
 			for(var i = 0 ; i < pollutionDetailLayer.length ; i++){
 				var queryTask = new esri.tasks.QueryTask(_API.searchLayer +"/" + pollutionDetailLayer[i]);
 				var query = new esri.tasks.Query();
-				if(pollutionDetailLayer[i] == 29 || pollutionDetailLayer[i] == 31 || pollutionDetailLayer[i] == 32){
-					query.where = "PNU = '"+pnuCd+"'";
-				}else{
-					query.where = "CO_ID = '"+coId+"'";
-				}
+				query.where = "PNU = '"+pnuCd+"'";
 
 				query.returnGeometry = false;
 				query.outFields = ["*"];
@@ -132,7 +134,7 @@ var common = (function(){
 				}catch(e){
 					console.log(e);
 				}
-				common.popUpDataInsert(results,getCoId);
+				common.popUpDataInsert(results,getCoId,pnuCd);
 
 				pollutionDetailPop.show();
 				pollutionDetailPop.setPosition(Ext.getBody().getViewSize().width -450 , Ext.getBody().getViewSize().height - 900 );
@@ -140,7 +142,7 @@ var common = (function(){
 			
 		},
 		
-		popUpDataInsert: function(results,getCoId){
+		popUpDataInsert: function(results,getCoId,pnuCd){
 
 			/* 0: AREA_BASE - 주소 : ADDRES_ALL
 			 * 1: JIMOK_CHG - 지목 : JIMOL_USE (order by JIMOL_UPDATE ), 면적: JIMOL_SIZE  , 이력정보: JIMOL_UPDATEMENT
@@ -195,55 +197,135 @@ var common = (function(){
 			infoRecord.setStore(jiOwnInfoStore);
 			
 			
+			
+			
+			
+			//
+			var pdfCombo = Ext.getCmp("imgCombo");
+			pdfCombo.setValue("");
+			
 			var coStoreData = [];
 			
 			if(getCoId == true){
-				
-				for(var a = 0 ; a < results[5].features.length; a++){
-					coStoreData.push(
-							{"CO_NAME": results[4].features[0].attributes.CO_COMNAME 
-							,"CO_FACCAP" : results[5].features[a].attributes.CO_FACCAP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +"L"
-							,"CO_FACMATTER":results[5].features[a].attributes.CO_FACMATTER});
+				var queryTask = new esri.tasks.QueryTask(_API.piljiCo);
+				var query = new esri.tasks.Query();
+				query.where = "PNU = '"+pnuCd+"'";
+				query.returnGeometry = false;
+				query.outFields = ["*"];
+				queryTask.execute(query, function(result){
+					console.info(result);
+					if(result.features.length > 0 ){
+						for(var j = 0 ; j < result.features.length ; j++){
+							if(result.features[j].attributes.CO_CANCELDATE == "9999.12.31"){
+								coStoreData.push(
+										{"CO_NAME": result.features[j].attributes.CO_COMNAME,
+										 "CHG_DAY": result.features[j].attributes.CO_UPDATE,
+										 "END_DAY": "-",
+										 "CO_ID"  : result.features[j].attributes.CO_ID
+										});
+							}else{
+								coStoreData.push(
+										{"CO_NAME": result.features[j].attributes.CO_COMNAME,
+										 "CHG_DAY": result.features[j].attributes.CO_UPDATE,
+										 "END_DAY": result.features[j].attributes.CO_CANCELDATE,
+										 "CO_ID"  : result.features[j].attributes.CO_ID
+										});
+							}
 							
-				}
-
-				coNm = results[4].features[0].attributes.CO_COMNAME;
+						}
+					}
+					
+					var coInfoStore = Ext.create('Ext.data.Store',{
+						fields:[
+							'CO_NAME',
+							'CHG_DAY',
+							'END_DAY'
+						],
+						sorters: [{
+					    	property: 'CHG_DAY',
+					    	direction: 'DESC'
+					    }],
+						data:coStoreData
+					})
+					var coInfoRecord = Ext.getCmp("coInfoRecord");
+					coInfoRecord.setStore(coInfoStore);
+					
+					
+					var coIdList = "";
+					for(var a = 0 ; a < coStoreData.length; a++){
+						if(a == coStoreData.length-1){
+							coIdList += "'" + coStoreData[a].CO_ID + "'";
+						}else{
+							coIdList += "'" + coStoreData[a].CO_ID + "',";
+						}
+					}
+					console.info(coIdList);
+					var pdfArr = [];
+					var pdfResults = [];
+					for(var j = 0 ; j < _docInfo.length; j++){
+						var queryTask = new esri.tasks.QueryTask(_API.searchLayer + "/" + _docInfo[j].id);
+						var query = new esri.tasks.Query();
+						query.where = "CO_ID IN ("+coIdList+")";
+						query.returnGeometry = false;
+						query.outFields = ["*"];
+						pdfArr.push(queryTask.execute(query));
+						dojo.connect(queryTask, "onError", function(err) {
+							alert(err);
+						});
+					}
+					
+					var	pdfList = new dojo.DeferredList(pdfArr);
+					var pdfResults = [];
+					pdfList.then(function(){
+						try{
+							
+							for(var i=0; i<arguments[0].length; i++){
+								if(arguments[0][i][1].features.length > 0){
+									for(var j = 0 ; j < arguments[0][i][1].features.length; j++){
+										arguments[0][i][1].features[j].attributes.folderName = _docInfo[i].name;
+										arguments[0][i][1].features[j].attributes.type = _docInfo[i].id;
+									}
+									
+								}
+								pdfResults = pdfResults.concat(arguments[0][i][1].features);
+								
+	
+							}	
+							
+							
+							console.info(pdfResults);
+							
+							
+							var pdfData = [];
+							for(var q = 0 ; q < pdfResults.length; q++){
+								console.info(pdfResults[q].attributes);
+								pdfData.push({"fileName" : pdfResults[q].attributes.DOC_NM
+											, "fileClass": pdfResults[q].attributes.DOC_CLASS
+											, "fileType":pdfResults[q].attributes.type
+											, "folderName":pdfResults[q].attributes.folderName})
+							}
+							var pdfStore = Ext.create('Ext.data.Store',{
+								fields:[
+									'fileName',
+									'fileClass'
+								],
+								data:pdfData
+							});
+							
+							pdfCombo.setStore(pdfStore);
+						}catch(e){
+							console.log(e);
+						}
+					});
+					
+					
+				});
 				
-				coAd = addr;
-				
-				coNumb = results[3].features[0].attributes.CO_UNQNO;
+				dojo.connect(queryTask, "onError", function(err) {
+					alert(err);
+				});
 			}
 			
-			var coInfoStore = Ext.create('Ext.data.Store',{
-				fields:[
-					'CO_NAME',
-					'CO_FACCAP',
-					'CO_FACMATTER',
-					'CO_FACUPDATE',
-					'JIBUN'
-				],
-				sorters: [{
-			    	property: 'CO_UPDATE_DATE',
-			    	direction: 'DESC'
-			    }],
-				data:coStoreData
-			})
-			var coInfoRecord = Ext.getCmp("coInfoRecord");
-			coInfoRecord.setStore(coInfoStore);
-			
-			
-			/*사업장명 : coName
-			 *사업장주소 : coAddr
-			 *사업자등록번호 : coNum*/
-			
-			var coName = Ext.getCmp("coName");
-			coName.setHtml(coNm);
-			
-			var coAddr = Ext.getCmp("coAddr");
-			coAddr.setHtml(coAd);
-			
-			var coNum = Ext.getCmp("coNum");
-			coNum.setHtml(coNumb);
 			
 			
 			/* 주소 : infoAddr
@@ -262,86 +344,22 @@ var common = (function(){
 
 			
 			var infoAddr = Ext.getCmp("infoAddr");
+			var infoAddr1 = Ext.getCmp("infoAddr1");
 			infoAddr.setHtml(addr);
+			infoAddr1.setHtml(addr);
 			
 			var infoJimok = Ext.getCmp("infoJimok");
+			var infoJimok1 = Ext.getCmp("infoJimok1");
 			infoJimok.setHtml(jimok);
+			infoJimok1.setHtml(jimok);
 			
 			var infoArea = Ext.getCmp("infoArea");
+			var infoArea1 = Ext.getCmp("infoArea1");
 			infoArea.setHtml(area);
-			
-			
-			var pdfCombo = Ext.getCmp("imgCombo");
-			var pdfComponent = Ext.getCmp("pdfComponent");
-			pdfCombo.setValue("");
-			if(getCoId == true){
-				var pdfArr = [];
-				var pdfResults = [];
-				for(var j = 0 ; j < _docInfo.length; j++){
-					var queryTask = new esri.tasks.QueryTask(_API.searchLayer + "/" + _docInfo[j].id);
-					var query = new esri.tasks.Query();
-					query.where = "CO_ID = '"+results[4].features[0].attributes.CO_ID+"'";
-					query.returnGeometry = false;
-					query.outFields = ["*"];
-					pdfArr.push(queryTask.execute(query));
-					
-					dojo.connect(queryTask, "onError", function(err) {
-						alert(err);
-					});
-				}
-				
-				var	pdfList = new dojo.DeferredList(pdfArr);
-					var pdfResults = [];
-					pdfList.then(function(){
-					try{
-						
-						for(var i=0; i<arguments[0].length; i++){
-							if(arguments[0][i][1].features.length > 0){
-								for(var j = 0 ; j < arguments[0][i][1].features.length; j++){
-									arguments[0][i][1].features[j].attributes.folderName = _docInfo[i].name;
-									arguments[0][i][1].features[j].attributes.type = _docInfo[i].id;
-								}
-								
-							}
-							pdfResults = pdfResults.concat(arguments[0][i][1].features);
-
-						}	
-					}catch(e){
-						console.log(e);
-					}
-					
-					 
-					var pdfData = [];
-					for(var q = 0 ; q < pdfResults.length; q++){
-						pdfData.push({"fileName" : pdfResults[q].attributes.DOC_NM
-									, "fileClass": pdfResults[q].attributes.DOC_CLASS
-									, "fileType":pdfResults[q].attributes.type
-									, "folderName":pdfResults[q].attributes.folderName})
-					}
-					var pdfStore = Ext.create('Ext.data.Store',{
-						fields:[
-							'fileName',
-							'fileClass'
-						],
-						data:pdfData
-					});
-					
-					pdfCombo.setStore(pdfStore);
-					pdfComponent.setHtml("");
-			    });
-			}else{
-				//coId가 없을경우 건축물정보 remove
-				pdfCombo.setStore([]);
-				pdfComponent.setHtml("");
-				
-			}
-			
-			
-			
-            /*html : '<iframe src="./resources/DOC/DOC_CAD/4155010300-1-00270000-01.tiff" width="100%" height="100%"></iframe>',*/
-			
+			infoArea1.setHtml(area);
 			
 		},
+		
 		
 		mapClick: function(evt,type){
 			
@@ -434,14 +452,40 @@ var common = (function(){
 					}
 					
 					for(var j = 0 ; j < results.length; j++){
-						common.searchResult(results[j].attributes.layerId, results[j].attributes.PNU, getcoIdLayer , noCoId);	
+						common.searchResult(results[j].attributes.layerId, results[j].attributes.PNU, getcoIdLayer , noCoId , "Polygon");	
 					}					
 			    });
 			}			
 		},
 		
-		searchResult: function(layerId, PNU , getcoIdLayer , noCoId){
+		
+
+		testResult: function(UID,layerNum){
 			
+			common.searchResult(layerNum, UID , undefined, false ,"Point")  //layerId, PNU , getcoIdLayer , noCoId , type
+		},
+		
+		tabCounting: function(store){
+			
+			var tabInfo = Ext.getCmp("tab_"+store.gridName); //grid tab 
+			if(store.getCount() == tabInfo.totalCnt){ // 만약 원래 카운트와 필터 카운트가 같을시 총카운트만 표출
+				tabInfo.setTitle(tabInfo.initialConfig.title + "("+store.getCount()+")");
+			}else{
+				tabInfo.setTitle(tabInfo.initialConfig.title + "("+store.getCount()+"/"+tabInfo.totalCnt+")");
+			}
+			
+			
+		},
+		
+		//layerId : 레이어 id ,  pnu : pnu ID , getcoIdLayer : 공장아이디를 갖고 있는 레이어인지, noCoId : 루프중 공장아이디가 있는지 없는지 ,  type : polygon인지 point인지  
+		searchResult: function(layerId, PNU , getcoIdLayer , noCoId , type){
+			
+			console.info("layerId :::"+layerId);
+			console.info("PNU :::" + PNU);
+			console.info("getcoIdLayer :::" + getcoIdLayer);
+			console.info("noCoId :::" + noCoId);
+			console.info("type :::" + type);
+			//return;
 			//co_id 를 가져오는 레이어 인지 판단
 			var getCoId = false;
 			
@@ -457,6 +501,11 @@ var common = (function(){
 				if(_legend[i].layerId == layerId){
 					title = _legend[i].layerName;
 				}
+				
+			}
+			
+			if(layerId == 28){ //예외 legend에 포함되어 있지 않은 table 정보
+				title = "오염시설이력";
 			}
 			
 			var gridName = "";
@@ -467,6 +516,15 @@ var common = (function(){
 					gridTable = _gridMapping[j].tableId;
 				}
 			}
+			console.info("gridName::"+gridName);
+			console.info("gridTable::"+gridTable);
+			//임시 app.js 에 grid 명이 없을때
+			
+			if(gridTable == null){
+				alert("테이블이 존재하지 않습니다");
+				return;
+			}
+			
 			
 			var mapContainer = Ext.getCmp("mapContainer");
 			
@@ -476,9 +534,10 @@ var common = (function(){
 			var windowHeight = 300;
 			var windowY = mapContainer.getHeight() - windowHeight;
 			
-
+			console.info(mapContainer.getHeight() - windowY);
 			//1. nort 검색결과 생성
 			var searchResultWindow = Ext.getCmp("searchResultWindow");
+			console.info(searchResultWindow);
 			if(searchResultWindow == undefined){
 				var searchResultWindow = Ext.create("Ext.window.Window", {
 					renderTo: mapContainer.el,
@@ -487,15 +546,30 @@ var common = (function(){
 					constrain: true,
 					border:false,
 					shawdow:false,
+					maximizable: true,
 					width: windowWidth - westContainer.width+20,
 					height: mapContainer.getHeight() - windowY,
 					y: windowY,
-					x: westContainer.width-15
+					x: westContainer.width-15,
+					listeners:{
+						'maximize': function(){
+							this.setWidth(windowWidth - westContainer.width+20);
+							this.setX(westContainer.width-15);
+						},
+						resize: function(){
+							common.resultResize(this);
+						}
+					}
 				});
-				searchResultWindow.show();
 
 			}
 			
+			//공장 아이디가 없는 레이어이면
+			if(noCoId == true){
+				searchResultWindow.show();
+			}else{
+				searchResultWindow.hide();
+			}
 			
 			// 2. 탭페널 생성			
 			var searchResultTabPanel = Ext.getCmp("searchResultTabPanel");
@@ -521,32 +595,96 @@ var common = (function(){
 			
 			searchResultTabPanel.setActiveItem("tab_" + gridName);
 			
-			
 			//그리드 붙여 넣기
 			//asSgis.view.south.SearchResultGrid
-			
-			var resultGrid = Ext.create("asSgis.view.south.SearchResultGrid_"+gridName,{
-				border:false
-			});
-			var resultTab = Ext.getCmp("tab_"+gridName);
-			resultTab.add(resultGrid);
-			
-			
-			var grdCtl = resultGrid.items.items[0];
-			grdCtl = grdCtl.items.items[0];	
+			console.info(type);
+			if(type == "Polygon"){
+				console.info(gridName);
+				var resultGrid = Ext.getCmp("serachReultGrid_"+gridName+"_grid");
+				if(resultGrid ==undefined){
+					resultGrid = Ext.create("asSgis.view.south.SearchResultGrid_"+gridName,{
+						id: "serachReultGrid_"+gridName+"_grid",
+						autoResize: true,
+						border:false
+					});
+				}
+				
+				var resultTab = Ext.getCmp("tab_"+gridName);
+				resultTab.add(resultGrid);
+				
+				var grdCtl = resultGrid.items.items[0];
+				grdCtl = grdCtl.items.items[0];
+				var resultGridStore = Ext.create("asSgis.store.south.SearchResultGrid_"+gridName,{
+					layerId: gridTable,
+					pnuNo: PNU,
+					gridCtl : grdCtl,
+					gridName : gridName,
+					getCoId : getCoId,
+					noCoId : noCoId
+				});
+				resultGridStore.load();
+				
+			}else if(type == "Point"){
+				
+				
+				//임시 없는 데이터 
+				
+				
+				
+				var resultGrid = Ext.getCmp("serachReultGrid_Point_"+gridName+"_grid");
+				if(resultGrid == undefined){
+					resultGrid = Ext.create("asSgis.view.south.SearchResultGrid_Point_"+gridName,{
+						id: "serachReultGrid_Point_"+gridName+"_grid",
+						border:false
+					});
+				}
+				
+				var resultTab = Ext.getCmp("tab_"+gridName);
+				resultTab.add(resultGrid);
+				
+				
+				
+				var grdCtl = resultGrid.items.items[0];
+				grdCtl = grdCtl.items.items[0];	
 
-			var resultGridStore = Ext.create("asSgis.store.south.SearchResultGrid_"+gridName,{
-				layerId: gridTable,
-				pnuNo: PNU,
-				gridCtl : grdCtl,
-				gridName : gridName,
-				getCoId : getCoId,
-				noCoId : noCoId
-			});
-			resultGridStore.load();
-			
-			
+				var resultGridStore = Ext.create("asSgis.store.south.SearchResultGrid_Point_"+gridName,{
+					layerId: gridTable,
+					UID: PNU,
+					gridCtl : grdCtl,
+					gridName : gridName,
+					getCoId : getCoId,
+					noCoId : noCoId
+				});
+				resultGridStore.load();
+				
+				
+				//검색결과창이 hidden 일때 (다른검색을 하게되면 검색결과창이 초기화되어서...)
+				if(searchResultWindow.inheritedState.hidden == true){
+					console.info("?");
+					var comp = Ext.getCmp('searchResultTabPanel').items.items;  //검색결과 tab component 찾기
+					for(var a = 0 ; a < comp.length; a++){ //for문돌려 현제 검색결과에 있는 tab_id를 찾아 point_tab아이디와 다른것들은 hidden,토양오염실태조사,토양측정망 제외후 히든 
+						if(comp[a].id != "tab_"+gridName && comp[a].id != "tab_PLLT_RESERCH" && comp[a].id != "tab_PLLT_OBSERVE"){
+							Ext.getCmp('searchResultTabPanel').getComponent(comp[a].id).tab.hide();
+						}
+					}
+					searchResultWindow.show();
+				}
+				
+			}
 
+		},
+		
+		resultResize:function(window){
+			var searchResultWindow = Ext.getCmp("searchResultWindow");
+			if(Ext.getCmp('searchResultTabPanel') != undefined){
+				//현제 가지고 있는 그리드 모두의 width , height 값을 변경해준다
+				var searchResultPanel = Ext.getCmp('searchResultTabPanel').items.items;
+				for(var i = 0 ; i <  searchResultPanel.length; i++){
+					searchResultPanel[i].items.items[0].items.items[0].items.items[0].setHeight(window.height-80);
+					searchResultPanel[i].items.items[0].items.items[0].items.items[0].setWidth(window.width);
+				}
+			}
+			
 		},
 		
 		closeWindow: function(){

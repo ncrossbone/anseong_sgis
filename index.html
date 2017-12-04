@@ -13,6 +13,33 @@
 <script type="text/javascript" src="./resources/lib/jquery/jquery-1.11.3.min.js"></script>
 
 <style type="text/css">
+
+.x-tree-node-text> img {
+	vertical-align:middle !important; margin-top: -2px;
+}
+
+.x-tree-node-text> a { width: 19px !important; height: 19px !important; vertical-align: bottom !important; /*position: realive;*/ display: inline-block;}
+
+
+.x-tree-icon, .x-tree-elbow-img, .x-tree-checkbox{
+	margin-bottom: 0px !important;
+}
+
+.x-tree-checkbox {
+	margin-right: 0px !important;
+	top: 0px !important;
+	width: auto !important;
+	vertical-align: middle !important;
+}
+
+
+.x-tree-elbow-img { height: auto !important;}
+
+.x-tree-node-text> a> img {  position: absolute; top: 7px; } 
+
+
+
+
  @font-face {
   font-family: 'notokr-thin';
   font-style: normal;
@@ -138,20 +165,20 @@ color: #fff; font-size: 16px; letter-spacing: -1px; font-family: notokr-bold;
 .x-window-default {
     border: 1px solid #3f3f3f !important;
 }
-#StatsInfo,#PollutionDetailPop{
+#StatsInfo,#PollutionDetailPop,#pollutionFileView{
 	padding: 10px;
 }
-#StatsInfo_header{
+#StatsInfo_header,#pollutionFileView_header{
     background: #00284b;
     border: none !important;
 }
-#StatsInfo_header-title-textEl{
+#StatsInfo_header-title-textEl,#pollutionFileView_header-title-textEl{
     color: #fff;
     font-size: 16px;
     letter-spacing: -1px;
     font-family: notokr-bold;
 }
-#SearchResult_header, #PollutionDetailPop_header, #searchResultWindow_header{
+#SearchResult_header, #PollutionDetailPop_header, #searchResultWindow_header,#pollutionFileView_header{
  	background: #00284b;
     border: none !important;
 }

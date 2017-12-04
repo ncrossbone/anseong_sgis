@@ -1,14 +1,18 @@
 [{
-	"dynamicLayer" : "http://112.217.167.123:23002/arcgis/rest/services/Layer2_new/MapServer",
+	"proxyUrl" : "./proxy/proxy.jsp",
 	"searchLayer":"http://112.217.167.123:23002/arcgis/rest/services/SOIL_ANSUNG/MapServer",
+	"dynamicLayer" : "http://112.217.167.123:23002/arcgis/rest/services/Layer2_new/MapServer",
+	"anSeongDynamicLayer" : "http://112.217.167.123:23002/arcgis/rest/services/Layer2_new/MapServer/16",
+	"geometryServer":"http://112.217.167.123:23002/arcgis//rest/services/Utilities/Geometry/GeometryServer",
+	"anseongGeo":"http://112.217.167.123:23002/arcgis/rest/services/LSMD_CONT_LDREG/MapServer/8",
+	
 	"anseongDong":"http://112.217.167.123:23002/arcgis/rest/services/Layer1_new/MapServer/47",
 	"anseongRe":"http://112.217.167.123:23002/arcgis/rest/services/Layer1_new/MapServer/48",
-	"geometryServer":"http://112.217.167.123:23002/arcgis//rest/services/Utilities/Geometry/GeometryServer",
-	"proxyUrl" : "./proxy/proxy.jsp",
-	"anseongGeo":"http://112.217.167.123:23002/arcgis/rest/services/LSMD_CONT_LDREG/MapServer/8",
+	
 	"areaBase":"http://112.217.167.123:23002/arcgis/rest/services/SOIL_ANSUNG/MapServer/29",
 	"jimokChg":"http://112.217.167.123:23002/arcgis/rest/services/SOIL_ANSUNG/MapServer/31",
 	"ownChg":"http://112.217.167.123:23002/arcgis/rest/services/SOIL_ANSUNG/MapServer/32",
+	"piljiCo":"http://112.217.167.123:23002/arcgis/rest/services/SOIL_ANSUNG/MapServer/33",
 	"coHis":"http://112.217.167.123:23002/arcgis/rest/services/SOIL_ANSUNG/MapServer/26",
 	"coBase":"http://112.217.167.123:23002/arcgis/rest/services/SOIL_ANSUNG/MapServer/25"
 }]

@@ -8,43 +8,77 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_SPECIFY', {
 			xtype: 'grid',
 			id: 'serachReultGrid_PLLT_SPECIFY',
 			autoScroll:true,
-			height: 210,
+			height: 215,
+			plugins: 'gridfilters',
+			listeners: {
+				filterchange : function( store, filters, eOpts){
+					//filter change 이벤트시 카운팅
+					common.tabCounting(store);
+				}
+			},
 			columns : [ {
 				text : 'PNU',
 				dataIndex : 'PNU',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				listeners: {
+					click: function(tblView, el, rowCnt, colCnt, row){
+						console.info(row.record.data.PNU);
+						//row.record.data.PNU
+						common.areaComboSelect(row.record.data.PNU);
+					}
+				},filter: {
+		            type: 'string',
+		        }
+					
 			}, {
 				text : '사업장ID',
 				dataIndex : 'CO_ID',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+		        filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '대분류',
 				dataIndex : 'SUR_CATEGORY1',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+		        filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '소분류',
 				dataIndex : 'SUR_CATEGORY2',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+		        filter: {
+		            type: 'string',
+		        },
 			}, {
 				text : '이력번호',
 				dataIndex : 'SUR_HISNO',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+		        filter: {
+		            type: 'number',
+		        },
 			}, {
 				text : '수행연도',
 				dataIndex : 'SUR_DATE',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				xtype: 'datecolumn',
+		        filter: {
+		            type: 'date',
+		        },
+		        renderer: Ext.util.Format.dateRenderer('Y.m.d')
 			}, {
 				text : '지점번호',
 				dataIndex : 'SUR_SPOTNO',
@@ -213,25 +247,37 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_SPECIFY', {
 				dataIndex : 'SUR_ORG',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '출처구분',
 				dataIndex : 'SUR_INSEC',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '출처(문서ID)',
 				dataIndex : 'SUR_INDOC',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '비고',
 				dataIndex : 'SUR_TEXT',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}
 			]
 		}]

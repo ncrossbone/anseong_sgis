@@ -44,25 +44,11 @@ Ext.define("asSgis.view.north.North", {
 			},
 			items:[{
 				xtype:"label",
-				style:"font-size:13px; letter-spacing:-1px; color:#fff; background: url('./resources/images/ui/logout.png') no-repeat left center; padding-left: 20px; cursor:pointer;",
-				text:"로그아웃"
-			},{
-				xtype:"container",
-				width:10
-			},{
-				xtype:"label",
-				style:"color:#fff;",
-				text:"|"
-			},{
-				xtype:"container",
-				width:10
-			},{
-				xtype:"label",
 				style:"font-size:13px; letter-spacing:-1px; color:#fff; background: url('./resources/images/ui/guide.png') no-repeat left center; padding-left: 18px; cursor:pointer;",
 				text:"이용안내"
 			},{
 				xtype:"container",
-				width:20
+				width:207
 			}]
 		},{
 			xtype:"container",
@@ -218,7 +204,27 @@ Ext.define("asSgis.view.north.North", {
 			        }
 			    }
 				
-			}]
+			}/*,{
+				xtype: 'button',
+				listeners:{
+					click:function(){
+						var searchResultWindow = Ext.getCmp('searchResultWindow');
+						var searchResultTabPanel = Ext.getCmp('searchResultTabPanel');
+						console.info(searchResultTabPanel);
+						
+						//Ext.getCmp('TAB_PANEL_ID').getComponent('TAB_2').tab.hide();
+						//console.info(Ext.getCmp('searchResultTabPanel').getComponent());
+						Ext.getCmp('searchResultTabPanel').getComponent('tab_PLLT_SPECIFY').tab.hide();
+						
+						var tabPanel = searchResultWindow.down('#searchResultTabPanel');
+						tabPanel.down('#tab_PLLT_SPECIFY').hide();
+						
+						var tab_PLLT_SPECIFY = Ext.getCmp("tab_PLLT_SPECIFY");
+						console.info(tab_PLLT_SPECIFY);
+						tab_PLLT_SPECIFY.setHidden(true);
+					}
+				}
+			}*/]
 
 		}]
 	}],

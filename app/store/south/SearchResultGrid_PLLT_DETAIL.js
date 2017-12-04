@@ -51,7 +51,13 @@ Ext.define('asSgis.store.south.SearchResultGrid_PLLT_DETAIL', {
 				var queryTask = new esri.tasks.QueryTask(_API.searchLayer+"/"+store.layerId);
 				var query = new esri.tasks.Query();
 				query.returnGeometry = false;
-				query.where = "PNU = '" + store.pnuNo + "'";
+
+				if(store.pnuNo != "all"){
+					query.where = "PNU = '" + store.pnuNo + "'";
+				}else{
+					query.where = " 1=1 ";
+				}
+				
 				query.outFields = ['*'];
 				query.format = "JSON";
 				queryTask.execute(query,  function(results){
@@ -72,10 +78,17 @@ Ext.define('asSgis.store.south.SearchResultGrid_PLLT_DETAIL', {
 					
 					var serachReultGrid = Ext.getCmp("serachReultGrid_"+store.gridName);
 					serachReultGrid.setStore(store);
-
-					if(store.getCoId == true){
-						common.pollutionPop(serachReultGrid,store.getCoId, store.noCoId);
+					console.info(store);
+					if(store.pnuNo != "all"){						
+						if(store.getCoId == true){
+							common.pollutionPop(serachReultGrid,store.getCoId, store.noCoId);
+						}
 					}
+					
+					var tabInfo = Ext.getCmp("tab_"+store.gridName);
+					tabInfo.totalCnt = store.getCount();
+					tabInfo.setTitle(tabInfo.initialConfig.title + "("+store.getCount()+")");
+					
 				});
 				dojo.connect(queryTask, "onError", function(err) {
 					alert(err);

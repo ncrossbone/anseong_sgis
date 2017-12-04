@@ -9,68 +9,112 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_DETAIL', {
 		items: [{
 			xtype: 'grid',
 			id: 'serachReultGrid_PLLT_DETAIL',
-			height: 210,
+			height: 215,
+			plugins: 'gridfilters',
+			listeners: {
+				filterchange : function( store, filters, eOpts){
+					//filter change 이벤트시 카운팅
+					common.tabCounting(store);
+				}
+			},
 			autoScroll:true,
 			columns : [ {
 				text : 'PNU',
 				dataIndex : 'PNU',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				listeners: {
+					click: function(tblView, el, rowCnt, colCnt, row){
+						console.info(row.record.data.PNU);
+						//row.record.data.PNU
+						common.areaComboSelect(row.record.data.PNU);
+					}
+				},
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '사업장ID',
 				dataIndex : 'CO_ID',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '대분류',
 				dataIndex : 'SUR_CATEGORY1',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '소분류',
 				dataIndex : 'SUR_CATEGORY2',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '이력번호',
 				dataIndex : 'SUR_HISNO',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'number',
+		        }
 			}, {
 				text : '수행연도',
 				dataIndex : 'SUR_DATE',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'number',
+		        }
 			}, {
 				text : '지점번호',
 				dataIndex : 'SUR_SPOTNO',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '지점이름(정화장소)',
 				dataIndex : 'SUR_SPOTNAME',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '정화부지상세',
 				dataIndex : 'SUR_SPOTDET',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '정화기준',
 				dataIndex : 'SRU_REFER',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '카드뮴(mg/kg)',
 				dataIndex : 'SUR_Cd',
@@ -231,25 +275,37 @@ Ext.define('asSgis.view.south.SearchResultGrid_PLLT_DETAIL', {
 				dataIndex : 'SUR_ORG',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '출처구분',
 				dataIndex : 'SUR_INSEC',
 				align: 'right',
 				style: 'text-align:center',
-				width : 150
+				width : 150,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '출처(문서ID)',
 				dataIndex : 'SUR_INDOC',
 				align: 'right',
 				style: 'text-align:center',
-				width : 151
+				width : 151,
+				filter: {
+		            type: 'string',
+		        }
 			}, {
 				text : '비고',
 				dataIndex : 'SUR_TEXT',
 				align: 'right',
 				style: 'text-align:center',
-				width : 152
+				width : 152,
+				filter: {
+		            type: 'string',
+		        }
 			}]
 		}]
 	}],
